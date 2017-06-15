@@ -1,0 +1,16 @@
+{
+  "name": "sprayiot",
+  "version": "1.0.0",
+  "description": "chinh",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Chinh",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongoose": "^4.10.6"
+  }
+}
