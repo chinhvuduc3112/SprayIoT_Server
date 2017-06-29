@@ -35,7 +35,7 @@ module.exports = {
 
   area: mongoose.model('Area', mongoose.Schema({
     name: String,
-    description: String,
+    note: String,
     x: Number,
     y: Number,
     trash: Boolean
