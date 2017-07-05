@@ -21,8 +21,11 @@ module.exports = {
 
   groupUser: mongoose.model('GroupUser', mongoose.Schema({
     name: String,
-    description: String,
-    trash: Boolean
+    note: String,
+    trash: {
+      type: Boolean,
+      default: false
+    }
   })),
 
   permission: mongoose.model('Permission', mongoose.Schema({
@@ -30,7 +33,10 @@ module.exports = {
     menu: String,
     codelink: String,
     action: String,
-    trash: Boolean
+    trash: {
+      type: Boolean,
+      default: false
+    }
   })),
 
   area: mongoose.model('Area', mongoose.Schema({
@@ -38,7 +44,10 @@ module.exports = {
     note: String,
     x: Number,
     y: Number,
-    trash: Boolean
+    trash: {
+      type: Boolean,
+      default: false
+    }
   })),
 
   node: mongoose.model('Node', mongoose.Schema({
@@ -46,13 +55,19 @@ module.exports = {
     description: String,
     idArea: mongoose.Schema.Types.ObjectId,
     note: String,
-    trash: Boolean
+    trash: {
+      type: Boolean,
+      default: false
+    }
   })),
 
   deviceType: mongoose.model('DeviceType', mongoose.Schema({
     name: String,
     note: String,
-    trash: Boolean
+    trash: {
+      type: Boolean,
+      default: false
+    }
   })),
 
   deviceNode: mongoose.model('DeviceNode', mongoose.Schema({
