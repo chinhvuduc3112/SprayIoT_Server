@@ -6,7 +6,8 @@ var models = require('../models/models'),
     area = require('./area'),
     groupUser = require('./groupUser'),
     permission = require('./permission'),
-    node = require('./node');
+    node = require('./node'),
+    deviceType = require('./deviceType');
 
 module.exports = (router) => {
   router.post('/login', user.login);
@@ -33,4 +34,10 @@ module.exports = (router) => {
   router.post('/addNode', node.addNode);
   router.put('/updateNode', node.updateNode);
   router.delete('/deleteNode/:id', node.deleteNode);
+
+  router.post('/addDeviceType', deviceType.addDeviceType);
+  router.get('/getAllDeviceTypes', deviceType.getAllDeviceTypes);
+  router.get('/getDeviceType/:id', deviceType.getDeviceType);
+  router.put('/updateDeviceType', deviceType.updateDeviceType);
+  router.delete('/deleteDeviceType', deviceType.deleteDeviceType);
 }
