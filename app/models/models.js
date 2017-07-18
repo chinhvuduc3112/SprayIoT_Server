@@ -76,7 +76,10 @@ module.exports = {
     deviceTypeId: mongoose.Schema.Types.ObjectId,
     nodeId: mongoose.Schema.Types.ObjectId,
     note: String,
-    trash: Boolean
+    trash: {
+      type: Boolean,
+      default: false
+    }
   })),
 
   dataSensor: mongoose.model('DataSensor', mongoose.Schema({

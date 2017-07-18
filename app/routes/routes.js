@@ -7,7 +7,9 @@ var models = require('../models/models'),
     groupUser = require('./groupUser'),
     permission = require('./permission'),
     node = require('./node'),
-    deviceType = require('./deviceType');
+    deviceType = require('./deviceType'),
+    dataSensor = require('./dataSensor'),
+    deviceNode = require('./deviceNode');
 
 module.exports = (router) => {
   router.post('/login', user.login);
@@ -40,4 +42,13 @@ module.exports = (router) => {
   router.get('/getDeviceType/:id', deviceType.getDeviceType);
   router.put('/updateDeviceType', deviceType.updateDeviceType);
   router.delete('/deleteDeviceType', deviceType.deleteDeviceType);
+
+  router.get('/getDataSensor/:id', dataSensor.getDataSensor);
+  router.delete('/deleteDataSensor/:id', dataSensor.deleteDataSensor);
+
+  router.get('/getAllDeviceNodes', deviceNode.getAllDeviceNodes);
+  router.get('/getDeviceNode/:id', deviceNode.getDeviceNode);
+  router.post('/addDeviceNode', deviceNode.addDeviceNode);
+  router.put('/updateDeviceNode', deviceNode.updateDeviceNode);
+  router.delete('/deleteDeviceNode/:id', deviceNode.deleteDeviceNode);
 }
