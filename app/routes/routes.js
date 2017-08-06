@@ -9,7 +9,11 @@ var models = require('../models/models'),
     node = require('./node'),
     deviceType = require('./deviceType'),
     dataSensor = require('./dataSensor'),
-    deviceNode = require('./deviceNode');
+    deviceNode = require('./deviceNode'),
+    actuator = require('./actuator'),
+    functionn = require('./function'),
+    groupExcutionCondition = require('./groupExcutionCondition'),
+    historyAction = require('./historyAction');
 
 module.exports = (router) => {
   router.post('/login', user.login);
@@ -51,4 +55,26 @@ module.exports = (router) => {
   router.post('/addDeviceNode', deviceNode.addDeviceNode);
   router.put('/updateDeviceNode', deviceNode.updateDeviceNode);
   router.delete('/deleteDeviceNode/:id', deviceNode.deleteDeviceNode);
+
+  router.post('/addActuator', actuator.addActuator);
+  router.put('/updateActuator', actuator.updateActuator);
+  router.delete('/deleteActuator/:id', actuator.deleteActuator);
+
+  router.get('/getFunctions', functionn.getFunctions);
+  router.get('/getFunction/:id', functionn.getFunction);
+  router.post('/addFunction', functionn.addFunction);
+  router.put('/updateFunction', functionn.updateFunction);
+  router.delete('/deleteFunction/:id', functionn.deleteFunction);
+
+  router.get('/getGroupExcutionConditions', groupExcutionCondition.getGroupExcutionConditions);
+  router.get('/getGroupExcutionCondition/:id', groupExcutionCondition.getGroupExcutionCondition);
+  router.post('/addGroupExcutionCondition', groupExcutionCondition.addGroupExcutionCondition);
+  router.put('/updateGroupExcutionCondition', groupExcutionCondition.updateGroupExcutionCondition);
+  router.delete('/deleteGroupExcutionCondition/:id', groupExcutionCondition.deleteGroupExcutionCondition);
+
+  router.get('/getHistoryActions', historyAction.getHistoryActions);
+  router.get('/getHistoryAction/:id', historyAction.getHistoryAction);
+  router.post('/addHistoryAction', historyAction.addHistoryAction);
+  router.put('/updateHistoryAction', historyAction.updateHistoryAction);
+  router.delete('/deleteHistoryAction/:id', historyAction.deleteHistoryAction);
 }

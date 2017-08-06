@@ -20,7 +20,7 @@ module.exports = {
         });
       }
     });
-  };
+  },
 
   deleteDataSensor: (req, res) => {
     var _id = req.params.id;
