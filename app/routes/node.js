@@ -66,6 +66,7 @@ module.exports = {
     var description = req.body.description;
     var idArea = req.body.idArea;
     var note = req.body.note;
+    
     var _id = req.body._id;
     var trash = req.body.trash;
     models.node.update({
@@ -107,5 +108,8 @@ module.exports = {
         });
       }
     });
-  }
+  },
+
+
+
 }

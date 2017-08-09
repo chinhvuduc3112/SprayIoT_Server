@@ -52,9 +52,11 @@ module.exports = (router) => {
 
   router.get('/getAllDeviceNodes', deviceNode.getAllDeviceNodes);
   router.get('/getDeviceNode/:id', deviceNode.getDeviceNode);
+  router.get('/getDeviceNodeByNode/:nodeId', deviceNode.getDeviceNodeByNode);
   router.post('/addDeviceNode', deviceNode.addDeviceNode);
   router.put('/updateDeviceNode', deviceNode.updateDeviceNode);
   router.delete('/deleteDeviceNode/:id', deviceNode.deleteDeviceNode);
+  
 
   router.post('/addActuator', actuator.addActuator);
   router.put('/updateActuator', actuator.updateActuator);

@@ -41,13 +41,13 @@ module.exports = {
   addDeviceNode: (req, res) => {
     var name = req.body.name;
     var description = req.body.description;
-    var deviceTypeId = req.body.deviceTypeId;
+    var deviceType = req.body.deviceTypeId;
     var nodeId = req.body.nodeId;
     var note = req.body.note;
     models.deviceNode.create({
       name: name,
       description: description,
-      deviceTypeId: deviceTypeId,
+      deviceType: deviceType,
       nodeId: nodeId,
       note: note
     }, (err, data) => {
@@ -67,9 +67,10 @@ module.exports = {
   updateDeviceNode: (req, res) => {
     var name = req.body.name;
     var description = req.body.description;
-    var deviceTypeId = req.body.deviceTypeId;
+    var deviceType = req.body.deviceType;
     var nodeId = req.body.nodeId;
     var note = req.body.note;
+    var data = req.body.data;
     var trash = req.body.trash;
     models.deviceNode.update({
       _id: _id
@@ -77,9 +78,10 @@ module.exports = {
       $set: {
         name: name,
         description: description,
-        deviceTypeId: deviceTypeId,
+        deviceType: deviceType,
         nodeId: nodeId,
         note: note,
+        data: data,
         trash: trash
       }
     }, (err, data) => {
@@ -111,5 +113,22 @@ module.exports = {
         });
       }
     });
-  }
+  },
+
+  getDeviceNodeByNode: (req, res) => {
+    var nodeId = req.params.nodeId;
+    models.deviceNode.findById({nodeId: nodeId}, (err, data) => {
+      if (!err) {
+        res.json({
+          result: data,
+          status: 1
+        })
+      } else {
+        res.json({
+          status: 0,
+          err: err
+        });
+      }
+    });
+  },
 }

@@ -73,9 +73,13 @@ module.exports = {
   deviceNode: mongoose.model('DeviceNode', mongoose.Schema({
     name: String,
     description: String,
-    deviceTypeId: mongoose.Schema.Types.ObjectId,
+    deviceType: String,
     nodeId: mongoose.Schema.Types.ObjectId,
     note: String,
+    data: {
+      default: 0,
+      type: Number
+    },
     trash: {
       type: Boolean,
       default: false
