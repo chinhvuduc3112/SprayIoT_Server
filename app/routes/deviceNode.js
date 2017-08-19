@@ -41,17 +41,15 @@ module.exports = {
   addDeviceNode: (req, res) => {
     var name = req.body.name;
     var description = req.body.description;
-    var deviceType = req.body.deviceType;
+    var deviceTypeId = req.body.deviceTypeId;
     var nodeId = req.body.nodeId;
     var note = req.body.note;
-    var data = req.body.data;
     models.deviceNode.create({
       name: name,
       description: description,
-      deviceType: deviceType,
+      deviceTypeId: deviceTypeId,
       nodeId: nodeId,
-      note: note,
-      data: data
+      note: note
     }, (err, data) => {
       if (!err) {
         res.json({
@@ -69,7 +67,7 @@ module.exports = {
   updateDeviceNode: (req, res) => {
     var name = req.body.name;
     var description = req.body.description;
-    var deviceType = req.body.deviceType;
+    var deviceTypeId = req.body.deviceTypeId;
     var nodeId = req.body.nodeId;
     var note = req.body.note;
     var data = req.body.data;
@@ -80,7 +78,7 @@ module.exports = {
       $set: {
         name: name,
         description: description,
-        deviceType: deviceType,
+        deviceTypeId: deviceTypeId,
         nodeId: nodeId,
         note: note,
         data: data,
@@ -119,18 +117,55 @@ module.exports = {
 
   getDeviceNodeByNode: (req, res) => {
     var nodeId = req.params.nodeId;
-    models.deviceNode.find({nodeId: nodeId}, (err, data) => {
-      if (!err) {
-        res.json({
-          result: data,
-          status: 1
-        })
-      } else {
-        res.json({
-          status: 0,
-          err: err
-        });
+    models.deviceNode.aggregate([
+      {
+        "$match": {
+          nodeId: mongoose.Types.ObjectId(nodeId)
+        }
+      },
+      {
+        "$lookup": {
+          from: "devicetypes",     
+          localField: "deviceTypeId",     
+          foreignField: "_id",     
+          as: "deviceType" 
+        }
+      },
+      {
+        "$project": {
+          name: 1,
+          description: 1,
+          note: 1,
+          data: 1,
+          trash: 1,
+          deviceType: {"$arrayElemAt": ["$deviceType", 0]}
+        }
       }
+    ], (err, data) => {
+        if (!err) {
+          res.json({
+            result: data,
+            status: 1
+          })
+        } else {
+          res.json({
+            status: 0,
+            err: err
+          });
+        }
     });
+    // models.deviceNode.findById({nodeId: nodeId}, (err, data) => {
+    //   if (!err) {
+    //     res.json({
+    //       result: data,
+    //       status: 1
+    //     })
+    //   } else {
+    //     res.json({
+    //       status: 0,
+    //       err: err
+    //     });
+    //   }
+    // });
   },
 }

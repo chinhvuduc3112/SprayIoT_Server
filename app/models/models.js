@@ -53,7 +53,7 @@ module.exports = {
   node: mongoose.model('Node', mongoose.Schema({
     name: String,
     description: String,
-    idArea:  mongoose.Schema.Types.ObjectId,
+    idArea: mongoose.Schema.Types.ObjectId,
     note: String,
     trash: {
       type: Boolean,
@@ -73,7 +73,7 @@ module.exports = {
   deviceNode: mongoose.model('DeviceNode', mongoose.Schema({
     name: String,
     description: String,
-    deviceType: String,
+    deviceTypeId: mongoose.Schema.Types.ObjectId,
     nodeId: mongoose.Schema.Types.ObjectId,
     note: String,
     data: {

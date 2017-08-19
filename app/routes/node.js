@@ -45,7 +45,7 @@ module.exports = {
     models.node.create({
       name: name,
       description: description,
-      idArea: idArea !== null ? idArea : null,
+      idArea: idArea,
       note: note
     }, (err, data) => {
       if (!err) {
