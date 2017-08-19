@@ -53,7 +53,7 @@ module.exports = {
   node: mongoose.model('Node', mongoose.Schema({
     name: String,
     description: String,
-    idArea: mongoose.Schema.Types.ObjectId,
+    idArea:  mongoose.Schema.Types.ObjectId,
     note: String,
     trash: {
       type: Boolean,

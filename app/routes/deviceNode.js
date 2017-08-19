@@ -41,15 +41,17 @@ module.exports = {
   addDeviceNode: (req, res) => {
     var name = req.body.name;
     var description = req.body.description;
-    var deviceType = req.body.deviceTypeId;
+    var deviceType = req.body.deviceType;
     var nodeId = req.body.nodeId;
     var note = req.body.note;
+    var data = req.body.data;
     models.deviceNode.create({
       name: name,
       description: description,
       deviceType: deviceType,
       nodeId: nodeId,
-      note: note
+      note: note,
+      data: data
     }, (err, data) => {
       if (!err) {
         res.json({
@@ -117,7 +119,7 @@ module.exports = {
 
   getDeviceNodeByNode: (req, res) => {
     var nodeId = req.params.nodeId;
-    models.deviceNode.findById({nodeId: nodeId}, (err, data) => {
+    models.deviceNode.find({nodeId: nodeId}, (err, data) => {
       if (!err) {
         res.json({
           result: data,
