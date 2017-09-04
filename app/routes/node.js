@@ -110,6 +110,21 @@ module.exports = {
     });
   },
 
-
+  getNodeByIdArea: (req, res) => {
+    var idArea = req.params.idArea;
+    models.node.find({idArea: idArea}, (err, data) => {
+      if (!err) {
+        res.json({
+          status: 1,
+          result: data
+        });
+      } else {
+        res.json({
+          status: 0,
+          err: err
+        });
+      }
+    });
+  }
 
 }

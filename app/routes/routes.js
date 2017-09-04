@@ -40,6 +40,7 @@ module.exports = (router) => {
   router.post('/addNode', node.addNode);
   router.put('/updateNode', node.updateNode);
   router.delete('/deleteNode/:id', node.deleteNode);
+  router.get('/getNodeByIdArea/:idArea', node.getNodeByIdArea);
 
   router.post('/addDeviceType', deviceType.addDeviceType);
   router.get('/getAllDeviceTypes', deviceType.getAllDeviceTypes);
@@ -61,6 +62,7 @@ module.exports = (router) => {
   router.post('/addActuator', actuator.addActuator);
   router.put('/updateActuator', actuator.updateActuator);
   router.delete('/deleteActuator/:id', actuator.deleteActuator);
+  router.get('/getActuatorByIdArea/:idArea', actuator.getActuatorByIdArea);
 
   router.get('/getFunctions', functionn.getFunctions);
   router.get('/getFunction/:id', functionn.getFunction);

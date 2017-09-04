@@ -8,7 +8,7 @@ module.exports = {
     var name = req.body.name;
     var description = req.body.description;
     var deviceTypeId = req.body.deviceTypeId;
-    var areaId = req.body.areaId;
+    var idArea = req.body.idArea;
     var deviceParent = req.body.deviceParent;
     var status = req.body.status;
     var trash = req.body.trash;
@@ -16,7 +16,7 @@ module.exports = {
       name: name,
       description: description,
       deviceTypeId: deviceTypeId,
-      areaId: areaId,
+      idArea: idArea,
       deviceParent: deviceParent,
       status: status,
       trash: false
@@ -36,7 +36,7 @@ module.exports = {
     var _id = req.body._id;
     var description = req.body.description;
     var deviceTypeId = req.body.deviceTypeId;
-    var areaId = req.body.areaId;
+    var idArea = req.body.idArea;
     var deviceParent = req.body.deviceParent;
     var status = req.body.status;
     var trash = req.body.trash;
@@ -45,7 +45,7 @@ module.exports = {
         name: name,
         description: description,
         deviceTypeId: deviceTypeId,
-        areaId: areaId,
+        idArea: idArea,
         deviceParent: deviceParent,
         status: status,
         trash: false
@@ -79,4 +79,20 @@ module.exports = {
       }
     });
   },
+
+  getActuatorByIdArea: (req, res) => {
+    var idArea = req.params.idArea;
+    models.actuator.find({idArea: idArea}, (err, data) => {
+      if (!err) {
+        res.json({
+          status: 1
+        });
+      } else {
+        res.json({
+          status: 0,
+          err: err
+        });
+      }
+    });
+  }
 }

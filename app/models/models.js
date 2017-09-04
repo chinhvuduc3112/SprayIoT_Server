@@ -100,7 +100,7 @@ module.exports = {
     name: String,
     description: String,
     deviceTypeId: mongoose.Schema.Types.ObjectId,
-    areaId: mongoose.Schema.Types.ObjectId,
+    idArea: mongoose.Schema.Types.ObjectId,
     deviceParent: mongoose.Schema.Types.ObjectId,
     status: Boolean,
     trash: Boolean
