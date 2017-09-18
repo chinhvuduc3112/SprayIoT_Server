@@ -50,6 +50,8 @@ module.exports = (router) => {
 
   router.get('/getDataSensor/:id', dataSensor.getDataSensor);
   router.delete('/deleteDataSensor/:id', dataSensor.deleteDataSensor);
+  router.get('/getChartByHours', dataSensor.getChartByHours); // getChartByHours{timestamp}
+  router.get('/getChartByDays', dataSensor.getChartByDays); // getChartByDays?from={timestamp}&to={timestamp}
 
   router.get('/getAllDeviceNodes', deviceNode.getAllDeviceNodes);
   router.get('/getDeviceNode/:id', deviceNode.getDeviceNode);
