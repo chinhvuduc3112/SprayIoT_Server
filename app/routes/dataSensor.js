@@ -22,6 +22,29 @@ module.exports = {
     });
   },
 
+  addDataSensor: (req, res) => {
+    var deviceNodeId = req.body.deviceNodeId;
+    var time = new Date(req.body.time);
+    var data = req.body.data;
+    models.deviceNode.create({
+      deviceNodeId: name,
+      time: description,
+      data: deviceTypeId,
+      trash: false,
+    }, (err, data) => {
+      if (!err) {
+        res.json({
+          status: 1,
+        });
+      } else {
+        res.json({
+          status: 0,
+          err: err
+        });
+      }
+    });
+  },
+
   deleteDataSensor: (req, res) => {
     var _id = req.params.id;
     models.dataSensor.remove({_id: _id}, (err, data) => {

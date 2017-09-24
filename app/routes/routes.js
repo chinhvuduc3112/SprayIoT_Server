@@ -49,8 +49,9 @@ module.exports = (router) => {
   router.delete('/deleteDeviceType', deviceType.deleteDeviceType);
 
   router.get('/getDataSensor/:id', dataSensor.getDataSensor);
+  router.post('/addDataSensor', dataSensor.addDataSensor);
   router.delete('/deleteDataSensor/:id', dataSensor.deleteDataSensor);
-  router.get('/getChartByHours', dataSensor.getChartByHours); // getChartByHours{timestamp}
+  router.get('/getChartByHours/:date', dataSensor.getChartByHours); // getChartByHours{timestamp}
   router.get('/getChartByDays', dataSensor.getChartByDays); // getChartByDays?from={timestamp}&to={timestamp}
 
   router.get('/getAllDeviceNodes', deviceNode.getAllDeviceNodes);
