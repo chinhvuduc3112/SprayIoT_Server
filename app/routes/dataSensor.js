@@ -27,9 +27,9 @@ module.exports = {
     var time = new Date(req.body.time);
     var data = req.body.data;
     models.deviceNode.create({
-      deviceNodeId: name,
-      time: description,
-      data: deviceTypeId,
+      deviceNodeId: deviceNodeId,
+      time: time,
+      data: data,
       trash: false,
     }, (err, data) => {
       if (!err) {
