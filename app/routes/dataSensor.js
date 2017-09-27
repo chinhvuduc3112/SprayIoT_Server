@@ -26,7 +26,7 @@ module.exports = {
     var deviceNodeId = req.body.deviceNodeId;
     var time = new Date(req.body.time);
     var data = req.body.data;
-    models.deviceNode.create({
+    models.dataSensor.create({
       deviceNodeId: deviceNodeId,
       time: time,
       data: data,
