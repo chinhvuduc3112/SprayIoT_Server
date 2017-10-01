@@ -63,10 +63,11 @@ module.exports = {
 
   getChartByHours: (req, res) => {
     let date = new Date(req.params.date);
+    let deviceNodeId = req.query.deviceNodeId;
     let year = date.getFullYear();
     let month = date.getMonth();
     let day = date.getDate();
-    getChartByHours(year, month, day).then(data => {
+    getChartByHours(year, month, day, deviceNodeId).then(data => {
       res.json({
         status: 1,
         result: data
@@ -82,7 +83,8 @@ module.exports = {
   getChartByDays: (req, res) => {
     let from = new Date(req.query.from);
     let to = new Date(req.query.to);
-    getChartByDays(from, to).then(data => {
+    let deviceNodeId = req.query.deviceNodeId;
+    getChartByDays(from, to, deviceNodeId).then(data => {
       res.json({
         status: 1,
         result: data
@@ -96,13 +98,14 @@ module.exports = {
   }
 }
 
-function getAvgInHour(year, month, day, hour) {
+function getAvgInHour(year, month, day, hour, deviceNodeId) {
   let start = new Date(year, month, day, hour, 0, 0, 0);
   let end = new Date(year, month, day, hour, 59, 59, 999);
   return models.dataSensor.aggregate([
     {
       $match: {
         time: {$gte: start, $lte: end},
+        deviceNodeId: deviceNodeId
       }
     },
     {
@@ -113,7 +116,7 @@ function getAvgInHour(year, month, day, hour) {
   ]);
 }
 
-function getAvgInDay(day) {
+function getAvgInDay(day, deviceNodeId) {
   let year = day.getFullYear();
   let month = day.getMonth();
   let date = day.getDate();
@@ -123,6 +126,7 @@ function getAvgInDay(day) {
     {
       $match: {
         time: {$gte: start, $lte: end},
+        deviceNodeId: deviceNodeId
       }
     },
     {
@@ -136,7 +140,7 @@ function getAvgInDay(day) {
 async function getChartByHours(year, month, day) {
   let result = [];
   for (let i = 0; i <= 23; i++) {
-    result.push(await getAvgInHour(year, month, day, i));
+    result.push(await getAvgInHour(year, month, day, deviceNodeId,i));
   }
   return result;
 }
@@ -159,11 +163,11 @@ function getDates (startDate, endDate) {
   
 };
 
-async function getChartByDays(from, to) {
+async function getChartByDays(from, to, deviceNodeId) {
   let dates = await getDates(new Date(from), new Date(to));
   let result = {};
   dates.forEach(async (date) => {
-    result[date.getTime()] = await getAvgInDay(date);
+    result[date.getTime()] = await getAvgInDay(date, deviceNodeId);
   });
   return result;
 }
