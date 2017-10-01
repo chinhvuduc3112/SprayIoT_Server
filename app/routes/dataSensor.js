@@ -24,7 +24,7 @@ module.exports = {
 
   addDataSensor: (req, res) => {
     var deviceNodeId = req.body.deviceNodeId;
-    var time = new Date(req.body.time);
+    var time = new Date(parseInt(req.body.time));
     var data = req.body.data;
     models.dataSensor.create({
       deviceNodeId: deviceNodeId,
@@ -62,7 +62,7 @@ module.exports = {
   },
 
   getChartByHours: (req, res) => {
-    let date = new Date(req.params.date);
+    let date = new Date(parseInt(req.params.date));
     let deviceNodeId = req.query.deviceNodeId;
     let year = date.getFullYear();
     let month = date.getMonth();
@@ -105,11 +105,12 @@ function getAvgInHour(year, month, day, hour, deviceNodeId) {
     {
       $match: {
         time: {$gte: start, $lte: end},
-        deviceNodeId: deviceNodeId
+        deviceNodeId: new mongoose.Types.ObjectId(deviceNodeId)
       }
     },
     {
-      $project: {
+      $group: {
+        _id: "$deviceNodeId",
         avgData: {$avg: "$data"}
       }
     }
@@ -130,17 +131,19 @@ function getAvgInDay(day, deviceNodeId) {
       }
     },
     {
-      $project: {
+      $group: {
+        _id: "$deviceNodeId",
+        deviceNodeId: new mongoose.Types.ObjectId(deviceNodeId),
         avgData: {$avg: "$data"}
       }
     }
   ]);
 }
 
-async function getChartByHours(year, month, day) {
+async function getChartByHours(year, month, day, deviceNodeId) {
   let result = [];
   for (let i = 0; i <= 23; i++) {
-    result.push(await getAvgInHour(year, month, day, deviceNodeId,i));
+    result.push(await getAvgInHour(year, month, day, i, deviceNodeId));
   }
   return result;
 }
