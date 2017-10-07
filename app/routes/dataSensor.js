@@ -7,7 +7,7 @@ module.exports = {
 
   getDataSensor: (req,res) => {
     var _id = req.params.id;
-    models.dataSensor.findById(_id, (err, data) => {
+    models.deviceNode.findById(_id, (err, data) => {
       if (!err) {
         res.json({
           result: data,
@@ -143,7 +143,12 @@ function getAvgInDay(day, deviceNodeId) {
 async function getChartByHours(year, month, day, deviceNodeId) {
   let result = [];
   for (let i = 0; i <= 23; i++) {
-    result.push(await getAvgInHour(year, month, day, i, deviceNodeId));
+    let x = await getAvgInHour(year, month, day, i, deviceNodeId);
+    let a = {
+      _id: x[0] !== undefined ? x[0]._id : null,
+      avgData: x[0] !== undefined ? x[0].avgData : null,
+    };   
+    result.push(a);
   }
   return result;
 }
