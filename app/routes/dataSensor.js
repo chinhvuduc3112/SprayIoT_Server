@@ -146,7 +146,7 @@ async function getChartByHours(year, month, day, deviceNodeId) {
     let x = await getAvgInHour(year, month, day, i, deviceNodeId);
     let a = {
       _id: x[0] !== undefined ? x[0]._id : null,
-      avgData: x[0] !== undefined ? x[0].avgData : null,
+      avgData: x[0] !== undefined ? x[0].avgData : -1,
     };   
     result.push(a);
   }
