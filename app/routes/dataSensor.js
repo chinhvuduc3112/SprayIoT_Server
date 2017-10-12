@@ -81,9 +81,9 @@ module.exports = {
   },
 
   getChartByDays: (req, res) => {
-    let from = new Date(req.query.from);
-    let to = new Date(req.query.to);
-    let deviceNodeId = req.query.deviceNodeId;
+    let from = new Date(parseInt(req.query.from));
+    let to = new Date(parseInt(req.query.to));
+    let deviceNodeId = new mongoose.Types.ObjectId(req.query.deviceNodeId);
     getChartByDays(from, to, deviceNodeId).then(data => {
       res.json({
         status: 1,
@@ -127,13 +127,13 @@ function getAvgInDay(day, deviceNodeId) {
     {
       $match: {
         time: {$gte: start, $lte: end},
-        deviceNodeId: deviceNodeId
+        deviceNodeId: new mongoose.Types.ObjectId(deviceNodeId)
       }
     },
     {
       $group: {
         _id: "$deviceNodeId",
-        deviceNodeId: new mongoose.Types.ObjectId(deviceNodeId),
+        // deviceNodeId: new mongoose.Types.ObjectId(deviceNodeId),
         avgData: {$avg: "$data"}
       }
     }
@@ -173,9 +173,13 @@ function getDates (startDate, endDate) {
 
 async function getChartByDays(from, to, deviceNodeId) {
   let dates = await getDates(new Date(from), new Date(to));
-  let result = {};
-  dates.forEach(async (date) => {
-    result[date.getTime()] = await getAvgInDay(date, deviceNodeId);
-  });
+  let result = [];
+  for (let i = 0; i < dates.length; i++) {
+    let data = await getAvgInDay(dates[i], deviceNodeId);
+    result.push({
+      date: dates[i].getTime(),
+      avgData: data[0] !== undefined ? data[0].avgData : -1,
+    })
+  }
   return result;
 }
