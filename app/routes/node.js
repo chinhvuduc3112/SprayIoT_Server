@@ -74,15 +74,14 @@ module.exports = {
       $set: {
         name: name,
         description: description,
-        idArea: idArea,
+        idArea: idArea != '' ? idArea : null,
         note: note,
         trash: trash
       }
     }, (err, data) => {
       if (!err) {
         res.json({
-          status: 1,
-          result: 1
+          status: 1
         });
       } else {
         res.json({
