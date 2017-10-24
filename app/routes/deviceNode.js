@@ -70,7 +70,6 @@ module.exports = {
     var deviceTypeId = req.body.deviceTypeId;
     var nodeId = req.body.nodeId;
     var note = req.body.note;
-    var data = req.body.data;
     var trash = req.body.trash;
     models.deviceNode.update({
       _id: _id
@@ -81,7 +80,6 @@ module.exports = {
         deviceTypeId: deviceTypeId,
         nodeId: nodeId,
         note: note,
-        data: data,
         trash: trash
       }
     }, (err, data) => {
