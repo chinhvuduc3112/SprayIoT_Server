@@ -6,12 +6,11 @@ var models = require('../models/models'),
 module.exports = {
   addGroupExcutionCondition: (req, res) => {
     var name = req.body.name;
-    var note = req.body.note;
+    var description = req.body.description;
     var functionId = req.body.functionId;
-    var trash = req.body.trash;
     models.groupExecutionCondition.create({
       name: name,
-      note: note,
+      description: description,
       functionId: functionId,
       trash: false
     }, (err, data) => {
@@ -62,13 +61,13 @@ module.exports = {
   updateGroupExcutionCondition: (req, res) => {
     var _id = req.body._id;
     var name = req.body.name;
-    var note = req.body.note;
+    var description = req.body.description;
     var functionId = req.body.functionId;
     var trash = req.body.trash;
     models.groupExecutionCondition.update({_id: _id}, {
       $set: {
         name: name,
-        note: note,
+        description: description,
         functionId: functionId,
         trash: trash
       }

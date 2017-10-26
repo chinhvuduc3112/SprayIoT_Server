@@ -7,14 +7,13 @@ module.exports = {
   addFunction: (req, res) => {
     var actuatorId = req.body.actuatorId;
     var status = req.body.status;
-    var activityDuration = req.body.activityDuration;
-    var note = req.body.note;
-    var trash = req.body.trash;
+    var activityDuration = new Date(parseInt(req.body.time));
+    var description = req.body.note;
     models.function.create({
       actuatorId: actuatorId,
       status: status,
       activityDuration: activityDuration,
-      note: note,
+      description: description,
       trash: false
     }, (err, data) => {
       if (!err) {
@@ -65,15 +64,15 @@ module.exports = {
     var _id = req.body._id;
     var actuatorId = req.body.actuatorId;
     var status = req.body.status;
-    var activityDuration = req.body.activityDuration;
-    var note = req.body.note;
+    var activityDuration = new Date(parseInt(req.body.time));
+    var description = req.body.note;
     var trash = req.body.trash;
     models.function.update({_id: _id}, {
       $set: {
         actuatorId: actuatorId,
         status: status,
         activityDuration: activityDuration,
-        note: note,
+        description: description,
         trash: false
       }
     }, (err, data) => {

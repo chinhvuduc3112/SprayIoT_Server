@@ -101,7 +101,10 @@ module.exports = {
     description: String,
     deviceTypeId: mongoose.Schema.Types.ObjectId,
     idArea: mongoose.Schema.Types.ObjectId,
-    deviceParent: mongoose.Schema.Types.ObjectId,
+    time:{
+      type: Date,
+      default: new Date()
+    },
     status: Boolean,
     trash: Boolean
   })),
@@ -109,21 +112,24 @@ module.exports = {
   function: mongoose.model('Function', mongoose.Schema({
     actuatorId: mongoose.Schema.Types.ObjectId,
     status: Boolean,
-    activityDuration: Number,
-    note: String,
+    activityDuration: {
+      type: Date,
+      default: new Date()
+    },
+    description: String,
     trash: Boolean
   })),
 
   groupExecutionCondition: mongoose.model('GroupExecutionCondition', mongoose.Schema({
     name: String,
-    note: String,
+    description: String,
     functionId: mongoose.Schema.Types.ObjectId,
     trash: Boolean
   })),
 
   executionCondition: mongoose.model('ExecutionCondition', mongoose.Schema({
     name: String,
-    note: String,
+    description: String,
     groupExecutionConditionId: mongoose.Schema.Types.ObjectId,
     deviceNodeId: mongoose.Schema.Types.ObjectId,
     compare: Number,
@@ -132,7 +138,7 @@ module.exports = {
   })),
 
   historyAction: mongoose.model('GistoryAction', mongoose.Schema({
-    action: String,
+    name: String,
     functionId: mongoose.Schema.Types.ObjectId,
     userId: mongoose.Schema.Types.ObjectId,
     trash: Boolean

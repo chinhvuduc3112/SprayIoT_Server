@@ -5,12 +5,11 @@ var models = require('../models/models'),
 
 module.exports = {
   addHistoryAction: (req, res) => {
-    var action = req.body.action;
+    var name = req.body.name;
     var userId = req.body.userId;
     var functionId = req.body.functionId;
-    var trash = req.body.trash;
     models.historyAction.create({
-      action: action,
+      name: name,
       userId: userId,
       functionId: functionId,
       trash: false
@@ -61,13 +60,13 @@ module.exports = {
 
   updateHistoryAction: (req, res) => {
     var _id = req.body._id;
-    var action = req.body.action;
+    var name = req.body.name;
     var userId = req.body.userId;
     var functionId = req.body.functionId;
     var trash = req.body.trash;
     models.historyAction.update({_id: _id}, {
       $set: {
-        action: action,
+        name: name,
         userId: userId,
         functionId: functionId,
         trash: trash

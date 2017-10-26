@@ -3,21 +3,27 @@
 var models = require('../models/models'),
     mongoose = require('mongoose');
 
+var mqtt = require('mqtt')
+var client  = mqtt.connect('mqtt://192.168.1.4')
+client.on('connect', function () {
+	console.log('abc')
+  
+  
+})
+
 module.exports = {
   addActuator: (req, res) => {
     var name = req.body.name;
     var description = req.body.description;
     var deviceTypeId = req.body.deviceTypeId;
     var idArea = req.body.idArea;
-    var deviceParent = req.body.deviceParent;
-    var status = req.body.status;
-    var trash = req.body.trash;
+    var time = new Date(parseInt(req.body.time));
     models.actuator.create({
       name: name,
       description: description,
       deviceTypeId: deviceTypeId,
       idArea: idArea,
-      deviceParent: deviceParent,
+      time: time,
       status: status,
       trash: false
     }, (err, data) => {
@@ -34,19 +40,29 @@ module.exports = {
 
   updateActuator: (req, res) => {
     var _id = req.body._id;
+    var name = req.body.name;
     var description = req.body.description;
     var deviceTypeId = req.body.deviceTypeId;
     var idArea = req.body.idArea;
-    var deviceParent = req.body.deviceParent;
-    var status = req.body.status;
+    var time = new Date(parseInt(req.body.time));
+    var status = req.body.status || undefined;
     var trash = req.body.trash;
+    if (status !== undefined) {
+      let packet = {
+        _id: _id,
+        name: name,
+        status: status,
+        time: req.body.time
+      };
+      client.publish('/function', JSON.stringify(packet));
+    }
     models.actuator.update({_id: _id}, {
       $set: {
         name: name,
         description: description,
         deviceTypeId: deviceTypeId,
         idArea: idArea,
-        deviceParent: deviceParent,
+        time: time,
         status: status,
         trash: false
       }
