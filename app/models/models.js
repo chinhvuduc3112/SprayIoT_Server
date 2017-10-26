@@ -137,7 +137,7 @@ module.exports = {
     trash: Boolean
   })),
 
-  historyAction: mongoose.model('GistoryAction', mongoose.Schema({
+  historyAction: mongoose.model('HistoryAction', mongoose.Schema({
     name: String,
     functionId: mongoose.Schema.Types.ObjectId,
     userId: mongoose.Schema.Types.ObjectId,

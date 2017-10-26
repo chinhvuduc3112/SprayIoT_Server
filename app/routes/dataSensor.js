@@ -1,11 +1,11 @@
 "use strict";
 
 var models = require('../models/models'),
-    mongoose = require('mongoose');
+  mongoose = require('mongoose');
 
 module.exports = {
 
-  getDataSensor: (req,res) => {
+  getDataSensor: (req, res) => {
     var _id = req.params.id;
     models.deviceNode.findById(_id, (err, data) => {
       if (!err) {
@@ -47,7 +47,7 @@ module.exports = {
 
   deleteDataSensor: (req, res) => {
     var _id = req.params.id;
-    models.dataSensor.remove({_id: _id}, (err, data) => {
+    models.dataSensor.remove({ _id: _id }, (err, data) => {
       if (!err) {
         res.json({
           status: 1
@@ -104,14 +104,14 @@ function getAvgInHour(year, month, day, hour, deviceNodeId) {
   return models.dataSensor.aggregate([
     {
       $match: {
-        time: {$gte: start, $lte: end},
+        time: { $gte: start, $lte: end },
         deviceNodeId: new mongoose.Types.ObjectId(deviceNodeId)
       }
     },
     {
       $group: {
         _id: "$deviceNodeId",
-        avgData: {$avg: "$data"}
+        avgData: { $avg: "$data" }
       }
     }
   ]);
@@ -126,7 +126,7 @@ function getAvgInDay(day, deviceNodeId) {
   return models.dataSensor.aggregate([
     {
       $match: {
-        time: {$gte: start, $lte: end},
+        time: { $gte: start, $lte: end },
         deviceNodeId: new mongoose.Types.ObjectId(deviceNodeId)
       }
     },
@@ -134,7 +134,7 @@ function getAvgInDay(day, deviceNodeId) {
       $group: {
         _id: "$deviceNodeId",
         // deviceNodeId: new mongoose.Types.ObjectId(deviceNodeId),
-        avgData: {$avg: "$data"}
+        avgData: { $avg: "$data" }
       }
     }
   ]);
@@ -147,28 +147,28 @@ async function getChartByHours(year, month, day, deviceNodeId) {
     let a = {
       _id: x[0] !== undefined ? x[0]._id : null,
       avgData: x[0] !== undefined ? x[0].avgData : -1,
-    };   
+    };
     result.push(a);
   }
   return result;
 }
 
-function getDates (startDate, endDate) {
+function getDates(startDate, endDate) {
   return new Promise((resolve, reject) => {
     let dates = [],
-        currentDate = startDate,
-        addDays = function(days) {
-          let date = new Date(this.valueOf());
-          date.setDate(date.getDate() + days);
-          return date;
-        };
+      currentDate = startDate,
+      addDays = function (days) {
+        let date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+      };
     while (currentDate <= endDate) {
       dates.push(currentDate);
       currentDate = addDays.call(currentDate, 1);
     }
     resolve(dates);
   })
-  
+
 };
 
 async function getChartByDays(from, to, deviceNodeId) {

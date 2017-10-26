@@ -1,7 +1,7 @@
 "use strict";
 
 var models = require('../models/models'),
-    mongoose = require('mongoose');
+  mongoose = require('mongoose');
 
 module.exports = {
   getAllNodes: (req, res) => {
@@ -71,30 +71,30 @@ module.exports = {
     models.node.update({
       _id: _id
     }, {
-      $set: {
-        name: name,
-        description: description,
-        idArea: idArea != '' ? idArea : null,
-        note: note,
-        trash: trash
-      }
-    }, (err, data) => {
-      if (!err) {
-        res.json({
-          status: 1
-        });
-      } else {
-        res.json({
-          status: 0,
-          err: err
-        });
-      }
-    });
+        $set: {
+          name: name,
+          description: description,
+          idArea: idArea != '' ? idArea : null,
+          note: note,
+          trash: trash
+        }
+      }, (err, data) => {
+        if (!err) {
+          res.json({
+            status: 1
+          });
+        } else {
+          res.json({
+            status: 0,
+            err: err
+          });
+        }
+      });
   },
 
   deleteNode: (req, res) => {
     var _id = req.params.id;
-    models.node.remove({_id: _id}, (err, data) => {
+    models.node.remove({ _id: _id }, (err, data) => {
       if (!err) {
         res.json({
           status: 1
@@ -110,7 +110,7 @@ module.exports = {
 
   getNodeByIdArea: (req, res) => {
     var idArea = req.params.idArea;
-    models.node.find({idArea: idArea}, (err, data) => {
+    models.node.find({ idArea: idArea }, (err, data) => {
       if (!err) {
         res.json({
           status: 1,

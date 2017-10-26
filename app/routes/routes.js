@@ -60,10 +60,11 @@ module.exports = (router) => {
   router.post('/addDeviceNode', deviceNode.addDeviceNode);
   router.put('/updateDeviceNode', deviceNode.updateDeviceNode);
   router.delete('/deleteDeviceNode/:id', deviceNode.deleteDeviceNode);
-  
 
+  router.get('/getActuators', actuator.getActuators);
   router.post('/addActuator', actuator.addActuator);
-  router.put('/updateActuator', actuator.updateActuator);
+  router.put('/updateDataActuator', actuator.updateDataActuator);
+  router.put('/updateInfoActuator', actuator.updateInfoActuator);
   router.delete('/deleteActuator/:id', actuator.deleteActuator);
   router.get('/getActuatorByIdArea/:idArea', actuator.getActuatorByIdArea);
 
