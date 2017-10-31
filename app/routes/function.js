@@ -1,15 +1,17 @@
 "use strict";
 
 var models = require('../models/models'),
-    mongoose = require('mongoose');
+  mongoose = require('mongoose');
 
 module.exports = {
   addFunction: (req, res) => {
+    var name = req.body.name;
     var actuatorId = req.body.actuatorId;
     var status = req.body.status;
     var activityDuration = new Date(parseInt(req.body.time));
     var description = req.body.note;
     models.function.create({
+      name: name,
       actuatorId: actuatorId,
       status: status,
       activityDuration: activityDuration,
@@ -17,7 +19,7 @@ module.exports = {
       trash: false
     }, (err, data) => {
       if (!err) {
-        res.json({status: 1});
+        res.json({ status: 1 });
       } else {
         res.json({
           status: 0,
@@ -62,13 +64,15 @@ module.exports = {
 
   updateFunction: (req, res) => {
     var _id = req.body._id;
+    var name = req.body.name;
     var actuatorId = req.body.actuatorId;
     var status = req.body.status;
     var activityDuration = new Date(parseInt(req.body.time));
     var description = req.body.note;
     var trash = req.body.trash;
-    models.function.update({_id: _id}, {
+    models.function.update({ _id: _id }, {
       $set: {
+        name: name,
         actuatorId: actuatorId,
         status: status,
         activityDuration: activityDuration,
@@ -91,7 +95,7 @@ module.exports = {
 
   deleteFunction: (req, res) => {
     var _id = req.params.id;
-    models.function.remove({_id: _id}, (err, data) => {
+    models.function.remove({ _id: _id }, (err, data) => {
       if (!err) {
         res.json({
           status: 1
@@ -104,5 +108,5 @@ module.exports = {
       }
     });
   },
-  
+
 }

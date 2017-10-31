@@ -4,11 +4,9 @@ var models = require('../models/models'),
   mongoose = require('mongoose');
 
 var mqtt = require('mqtt')
-var client = mqtt.connect('mqtt://172.16.6.75')
+var client = mqtt.connect('mqtt://192.168.1.4')
 client.on('connect', function () {
   console.log('abc')
-
-
 })
 
 module.exports = {

@@ -93,7 +93,10 @@ module.exports = {
       default: new Date()
     },
     data: Number,
-    trash: Boolean
+    trash: {
+      type: Boolean,
+      default: false
+    }
   })),
 
   actuator: mongoose.model('Actuator', mongoose.Schema({
@@ -110,12 +113,10 @@ module.exports = {
   })),
 
   function: mongoose.model('Function', mongoose.Schema({
+    name: String,
     actuatorId: mongoose.Schema.Types.ObjectId,
     status: Boolean,
-    activityDuration: {
-      type: Date,
-      default: new Date()
-    },
+    activityDuration: Number,
     description: String,
     trash: Boolean
   })),
@@ -134,7 +135,10 @@ module.exports = {
     deviceNodeId: mongoose.Schema.Types.ObjectId,
     compare: Number,
     compareValue: Number,
-    trash: Boolean
+    trash: {
+      type: Boolean,
+      default: false
+    }
   })),
 
   historyAction: mongoose.model('HistoryAction', mongoose.Schema({

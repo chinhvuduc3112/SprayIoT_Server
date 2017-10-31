@@ -13,6 +13,7 @@ var models = require('../models/models'),
     actuator = require('./actuator'),
     functionn = require('./function'),
     groupExcutionCondition = require('./groupExcutionCondition'),
+    excutionCondition = require('./executionCondition'),
     historyAction = require('./historyAction');
 
 module.exports = (router) => {
@@ -46,7 +47,7 @@ module.exports = (router) => {
   router.get('/getAllDeviceTypes', deviceType.getAllDeviceTypes);
   router.get('/getDeviceType/:id', deviceType.getDeviceType);
   router.put('/updateDeviceType', deviceType.updateDeviceType);
-  router.delete('/deleteDeviceType', deviceType.deleteDeviceType);
+  router.delete('/deleteDeviceType/:id', deviceType.deleteDeviceType);
 
   router.get('/getDataSensor/:id', dataSensor.getDataSensor);
   router.post('/addDataSensor', dataSensor.addDataSensor);
@@ -79,6 +80,12 @@ module.exports = (router) => {
   router.post('/addGroupExcutionCondition', groupExcutionCondition.addGroupExcutionCondition);
   router.put('/updateGroupExcutionCondition', groupExcutionCondition.updateGroupExcutionCondition);
   router.delete('/deleteGroupExcutionCondition/:id', groupExcutionCondition.deleteGroupExcutionCondition);
+
+  router.get('/getAllExecutionCondition', excutionCondition.getAllExecutionCondition);
+  router.get('/getExecutionCondition'), excutionCondition.getExecutionCondition;
+  router.post('/addExecutionCondition'), excutionCondition.addExecutionCondition;
+  router.put('/updateExecutionCondition', excutionCondition.updateExecutionCondition);
+  router.delete('/deleteExcutionCondition'), excutionCondition.deleteExcutionCondition;
 
   router.get('/getHistoryActions', historyAction.getHistoryActions);
   router.get('/getHistoryAction/:id', historyAction.getHistoryAction);
