@@ -10,14 +10,14 @@ client.on('connect', function () {
 })
 
 module.exports = {
-  getActuators:(req, res) =>{
-    models.actuator.find({}, (err, data) =>{
-      if(!err){
+  getActuators: (req, res) => {
+    models.actuator.find({}, (err, data) => {
+      if (!err) {
         res.json({
           result: data,
           status: 1
         });
-      }else{
+      } else {
         res.json({
           status: 0,
           err: err
@@ -31,13 +31,12 @@ module.exports = {
     var description = req.body.description;
     var deviceTypeId = req.body.deviceTypeId;
     var idArea = req.body.idArea;
-    var time = new Date(parseInt(req.body.time));
     models.actuator.create({
       name: name,
       description: description,
       deviceTypeId: deviceTypeId,
-      idArea: idArea,
-      time: time,
+      idArea: idArea != '' ? idArea : null,
+      time: 0,
       status: false,
       trash: false
     }, (err, data) => {
@@ -58,14 +57,12 @@ module.exports = {
     var description = req.body.description;
     var deviceTypeId = req.body.deviceTypeId;
     var idArea = req.body.idArea;
-    var trash = req.body.trash;
     models.actuator.update({ _id: _id }, {
       $set: {
         name: name,
         description: description,
         deviceTypeId: deviceTypeId,
-        idArea: idArea,
-        trash: false
+        idArea: idArea != '' ? idArea : null
       }
     }, (err, data) => {
       if (!err) {
@@ -84,7 +81,7 @@ module.exports = {
   updateDataActuator: (req, res) => {
     var _id = req.body._id;
     var name = req.body.name;
-    var time = new Date(parseInt(req.body.time));
+    var time = req.body.time;
     var status = req.body.status || undefined;
     if (status !== undefined) {
       console.log(status.toString())
@@ -92,7 +89,7 @@ module.exports = {
         _id: _id,
         name: name,
         status: status,
-        time: req.body.time
+        time: time
       };
       client.publish('/updateDataActuator', JSON.stringify(packet));
     }
@@ -137,7 +134,8 @@ module.exports = {
     models.actuator.find({ idArea: idArea }, (err, data) => {
       if (!err) {
         res.json({
-          status: 1
+          status: 1,
+          result:data
         });
       } else {
         res.json({

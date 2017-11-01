@@ -104,10 +104,7 @@ module.exports = {
     description: String,
     deviceTypeId: mongoose.Schema.Types.ObjectId,
     idArea: mongoose.Schema.Types.ObjectId,
-    time:{
-      type: Date,
-      default: new Date()
-    },
+    time: Number,
     status: Boolean,
     trash: Boolean
   })),
