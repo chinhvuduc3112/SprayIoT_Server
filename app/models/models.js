@@ -130,7 +130,7 @@ module.exports = {
     description: String,
     groupExecutionConditionId: mongoose.Schema.Types.ObjectId,
     deviceNodeId: mongoose.Schema.Types.ObjectId,
-    compare: Number,
+    compare: Number, //0: bang; 1:nho hon; 2:lon hon
     compareValue: Number,
     trash: {
       type: Boolean,
