@@ -144,5 +144,49 @@ module.exports = {
         });
       }
     });
+  },
+
+  getInfoActuators: (req, res) => {
+    models.actuator.aggregate([
+      {
+        "$lookup": {
+          from: "devicetypes",     
+          localField: "deviceTypeId",     
+          foreignField: "_id",     
+          as: "deviceType" 
+        }
+      },
+      {
+        "$lookup": {
+          from: "areas",     
+          localField: "idArea",     
+          foreignField: "_id",     
+          as: "area" 
+        }
+      },
+      {
+        "$project": {
+          name: 1,
+          description: 1,
+          note: 1,
+          data: 1,
+          trash: 1,
+          deviceType: {"$arrayElemAt": ["$deviceType", 0]},
+          area: {$ifNull: [{"$arrayElemAt": ["$area", 0]}, null]}
+        }
+      }
+    ], (err, data) => {
+        if (!err) {
+          res.json({
+            result: data,
+            status: 1
+          })
+        } else {
+          res.json({
+            status: 0,
+            err: err
+          });
+        }
+    });
   }
 }
