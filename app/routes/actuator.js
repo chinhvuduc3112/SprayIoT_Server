@@ -135,7 +135,7 @@ module.exports = {
       if (!err) {
         res.json({
           status: 1,
-          result:data
+          result: data
         });
       } else {
         res.json({
@@ -150,18 +150,18 @@ module.exports = {
     models.actuator.aggregate([
       {
         "$lookup": {
-          from: "devicetypes",     
-          localField: "deviceTypeId",     
-          foreignField: "_id",     
-          as: "deviceType" 
+          from: "devicetypes",
+          localField: "deviceTypeId",
+          foreignField: "_id",
+          as: "deviceType"
         }
       },
       {
         "$lookup": {
-          from: "areas",     
-          localField: "idArea",     
-          foreignField: "_id",     
-          as: "area" 
+          from: "areas",
+          localField: "idArea",
+          foreignField: "_id",
+          as: "area"
         }
       },
       {
@@ -170,23 +170,25 @@ module.exports = {
           description: 1,
           note: 1,
           data: 1,
+          status: 1,
+          time: 1,
           trash: 1,
-          deviceType: {"$arrayElemAt": ["$deviceType", 0]},
-          area: {$ifNull: [{"$arrayElemAt": ["$area", 0]}, null]}
+          deviceType: { "$arrayElemAt": ["$deviceType", 0] },
+          area: { $ifNull: [{ "$arrayElemAt": ["$area", 0] }, null] }
         }
       }
     ], (err, data) => {
-        if (!err) {
-          res.json({
-            result: data,
-            status: 1
-          })
-        } else {
-          res.json({
-            status: 0,
-            err: err
-          });
-        }
+      if (!err) {
+        res.json({
+          result: data,
+          status: 1
+        })
+      } else {
+        res.json({
+          status: 0,
+          err: err
+        });
+      }
     });
   }
 }

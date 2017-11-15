@@ -7,14 +7,11 @@ module.exports = {
   addFunction: (req, res) => {
     var name = req.body.name;
     var actuatorId = req.body.actuatorId;
-    var status = req.body.status;
-    var activityDuration = new Date(parseInt(req.body.time));
     var description = req.body.note;
     models.function.create({
       name: name,
       actuatorId: actuatorId,
-      status: status,
-      activityDuration: activityDuration,
+      activityDuration: 0,
       description: description,
       trash: false
     }, (err, data) => {

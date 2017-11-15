@@ -83,10 +83,10 @@ module.exports = (router) => {
   router.delete('/deleteGroupExcutionCondition/:id', groupExcutionCondition.deleteGroupExcutionCondition);
 
   router.get('/getAllExecutionCondition', excutionCondition.getAllExecutionCondition);
-  router.get('/getExecutionCondition'), excutionCondition.getExecutionCondition;
-  router.post('/addExecutionCondition'), excutionCondition.addExecutionCondition;
+  router.get('/getExecutionCondition', excutionCondition.getExecutionCondition);
+  router.post('/addExecutionCondition', excutionCondition.addExecutionCondition);
   router.put('/updateExecutionCondition', excutionCondition.updateExecutionCondition);
-  router.delete('/deleteExcutionCondition'), excutionCondition.deleteExcutionCondition;
+  router.delete('/deleteExcutionCondition', excutionCondition.deleteExcutionCondition);
 
   router.get('/getHistoryActions', historyAction.getHistoryActions);
   router.get('/getHistoryAction/:id', historyAction.getHistoryAction);

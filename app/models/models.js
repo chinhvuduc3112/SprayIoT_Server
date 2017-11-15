@@ -112,7 +112,10 @@ module.exports = {
   function: mongoose.model('Function', mongoose.Schema({
     name: String,
     actuatorId: mongoose.Schema.Types.ObjectId,
-    status: Boolean,
+    status: {
+      type: Boolean,
+      default: false
+    },
     activityDuration: Number,
     description: String,
     trash: Boolean
