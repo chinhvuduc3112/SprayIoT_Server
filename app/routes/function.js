@@ -59,6 +59,46 @@ module.exports = {
     });
   },
 
+  getFunctionByActuatorId: (req, res) => {
+    var actuatorId = req.params.actuatorId;
+    models.function.aggregate(
+      [
+        {
+          $match: {
+            actuatorId: mongoose.Types.ObjectId(actuatorId)
+          }
+        },
+        {
+          $lookup:  {
+            from: "actuators",
+            localField: "actuatorId",
+            foreignField: "_id",
+            as: "actuator"
+          }
+        },
+        {
+          $project: {
+            name: 1,
+            activityDuration: 1,
+            trash: 1,
+            status: 1,
+            actuator: {$ifNull: [{ "$arrayElemAt": ["$actuator", 0] }, null]},
+          }
+        }
+      ]
+    ).then(data => {
+      res.json({
+        result: data,
+        status: 1
+      })
+    }).catch(e => {
+      res.json({
+        status: 0,
+        err: err
+      });
+    });
+  },
+
   updateFunction: (req, res) => {
     var _id = req.body._id;
     var name = req.body.name;

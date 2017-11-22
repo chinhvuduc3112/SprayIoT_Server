@@ -51,7 +51,7 @@ module.exports = {
     });
   },
 
-  updateInfoActuator: (rep, res) => {
+  updateInfoActuator: (req, res) => {
     var _id = req.body._id;
     var name = req.body.name;
     var description = req.body.description;

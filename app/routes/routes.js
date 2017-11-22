@@ -72,18 +72,21 @@ module.exports = (router) => {
 
   router.get('/getFunctions', functionn.getFunctions);
   router.get('/getFunction/:id', functionn.getFunction);
+  router.get('/getFunctionByActuatorId/:actuatorId', functionn.getFunctionByActuatorId);
   router.post('/addFunction', functionn.addFunction);
   router.put('/updateFunction', functionn.updateFunction);
   router.delete('/deleteFunction/:id', functionn.deleteFunction);
 
   router.get('/getGroupExcutionConditions', groupExcutionCondition.getGroupExcutionConditions);
   router.get('/getGroupExcutionCondition/:id', groupExcutionCondition.getGroupExcutionCondition);
+  router.get('/getGroupExcutionConditionByFunction/:functionId', groupExcutionCondition.getGroupExcutionConditionByFunction);
   router.post('/addGroupExcutionCondition', groupExcutionCondition.addGroupExcutionCondition);
   router.put('/updateGroupExcutionCondition', groupExcutionCondition.updateGroupExcutionCondition);
   router.delete('/deleteGroupExcutionCondition/:id', groupExcutionCondition.deleteGroupExcutionCondition);
 
   router.get('/getAllExecutionCondition', excutionCondition.getAllExecutionCondition);
   router.get('/getExecutionCondition', excutionCondition.getExecutionCondition);
+  router.get('/getExecutionConditionByGroup/:groupId', excutionCondition.getExecutionConditionByGroup);
   router.post('/addExecutionCondition', excutionCondition.addExecutionCondition);
   router.put('/updateExecutionCondition', excutionCondition.updateExecutionCondition);
   router.delete('/deleteExcutionCondition', excutionCondition.deleteExcutionCondition);

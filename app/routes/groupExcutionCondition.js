@@ -58,6 +58,43 @@ module.exports = {
     });
   },
 
+  getGroupExcutionConditionByFunction: (req, res) => {
+    var functionId = req.params.functionId;
+    models.groupExecutionCondition.aggregate([
+      {
+        $match: {
+          functionId: mongoose.Types.ObjectId(functionId)
+        }
+      },
+      {
+        $lookup:  {
+          from: "functions",
+          localField: "functionId",
+          foreignField: "_id",
+          as: "function"
+        }
+      },
+      {
+        $project: {
+          name: 1,
+          description: 1,
+          trash: 1,
+          function: {$ifNull: [{ "$arrayElemAt": ["$function", 0] }, null]},
+        }
+      }
+    ]).then(data => {
+      res.json({
+        result: data,
+        status: 1
+      })
+    }).catch(e => {
+      res.json({
+        status: 0,
+        err: err
+      });
+    });
+  },
+
   updateGroupExcutionCondition: (req, res) => {
     var _id = req.body._id;
     var name = req.body.name;

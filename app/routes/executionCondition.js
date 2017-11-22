@@ -121,6 +121,52 @@ module.exports = {
         });
     },
 
+    getExecutionConditionByGroup: (req, res) => {
+        var groupId = req.params.groupId;
+        models.executionCondition.aggregate([
+            {
+              $match: {
+                groupExecutionConditionId: mongoose.Types.ObjectId(groupId)
+              }
+            },
+            {
+              $lookup:  {
+                from: "groupexecutionconditions",
+                localField: "groupExecutionConditionId",
+                foreignField: "_id",
+                as: "group"
+              }
+            },
+            {
+                $lookup:  {
+                  from: "devicenodes",
+                  localField: "deviceNodeId",
+                  foreignField: "_id",
+                  as: "devicenode"
+                }
+            },
+            {
+              $project: {
+                name: 1,
+                description: 1,
+                trash: 1,
+                groupExecutionCondition: {$ifNull: [{ "$arrayElemAt": ["$group", 0] }, null]},
+                deviceNode: {$ifNull: [{ "$arrayElemAt": ["$devicenode", 0] }, null]},
+              }
+            }
+          ]).then(data => {
+            res.json({
+              result: data,
+              status: 1
+            })
+          }).catch(e => {
+            res.json({
+              status: 0,
+              err: err
+            });
+          });
+    },
+
     deleteExcutionCondition: (req, res) => {
         var _id = req.params.id;
         models.executionCondition.remove({ _id: _id }, (err, data) => {
