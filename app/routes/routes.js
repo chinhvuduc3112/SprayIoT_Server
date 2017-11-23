@@ -75,6 +75,7 @@ module.exports = (router) => {
   router.get('/getFunctionByActuatorId/:actuatorId', functionn.getFunctionByActuatorId);
   router.post('/addFunction', functionn.addFunction);
   router.put('/updateFunction', functionn.updateFunction);
+  router.put('/updateNameFunction', functionn.updateNameFunction);// Không hiểu sao sai
   router.delete('/deleteFunction/:id', functionn.deleteFunction);
 
   router.get('/getGroupExcutionConditions', groupExcutionCondition.getGroupExcutionConditions);

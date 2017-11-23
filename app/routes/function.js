@@ -69,7 +69,7 @@ module.exports = {
           }
         },
         {
-          $lookup:  {
+          $lookup: {
             from: "actuators",
             localField: "actuatorId",
             foreignField: "_id",
@@ -82,7 +82,7 @@ module.exports = {
             activityDuration: 1,
             trash: 1,
             status: 1,
-            actuator: {$ifNull: [{ "$arrayElemAt": ["$actuator", 0] }, null]},
+            actuator: { $ifNull: [{ "$arrayElemAt": ["$actuator", 0] }, null] },
           }
         }
       ]
@@ -104,7 +104,7 @@ module.exports = {
     var name = req.body.name;
     var actuatorId = req.body.actuatorId;
     var status = req.body.status;
-    var activityDuration = new Date(parseInt(req.body.time));
+    var activityDuration = req.body.activityDuration;
     var description = req.body.note;
     var trash = req.body.trash;
     models.function.update({ _id: _id }, {
@@ -125,6 +125,29 @@ module.exports = {
         res.json({
           status: 0,
           err: err
+        });
+      }
+    });
+  },
+
+  updateNameFunction: (req, res) => {
+    var _id = req.body._id;
+    var name = req.body.name;
+    models.function.update({
+      _id: _id
+    }, {
+      $set: {
+        name: name
+      }
+    },(err, data)=>{
+      if(!err){
+        res.json({
+          status:1,
+        });
+      }else{
+        res.json({
+          status:0,
+          err:err
         });
       }
     });
