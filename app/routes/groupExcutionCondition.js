@@ -100,13 +100,11 @@ module.exports = {
     var name = req.body.name;
     var description = req.body.description;
     var functionId = req.body.functionId;
-    var trash = req.body.trash;
     models.groupExecutionCondition.update({_id: _id}, {
       $set: {
         name: name,
         description: description,
         functionId: functionId,
-        trash: trash
       }
     }, (err, data) => {
       if (!err) {

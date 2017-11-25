@@ -7,7 +7,7 @@ module.exports = {
   addFunction: (req, res) => {
     var name = req.body.name;
     var actuatorId = req.body.actuatorId;
-    var description = req.body.note;
+    var description = req.body.description;
     models.function.create({
       name: name,
       actuatorId: actuatorId,
@@ -26,7 +26,7 @@ module.exports = {
     });
   },
 
-  getFunctions: (req, res) => {
+    getFunctions: (req, res) => {
     models.function.find({}, (err, data) => {
       if (!err) {
         res.json({
