@@ -117,6 +117,7 @@ module.exports = {
       default: false
     },
     activityDuration: Number,
+    manualTime: Number,
     description: String,
     trash: Boolean
   })),
@@ -153,7 +154,7 @@ module.exports = {
     time:Number,
     time: {
       type: Date,
-      default: new Date()
+      default: new Date(),
     },
     trash: Boolean
   }))

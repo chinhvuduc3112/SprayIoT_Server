@@ -12,6 +12,7 @@ module.exports = {
       name: name,
       actuatorId: actuatorId,
       activityDuration: 0,
+      manualTime: 0,
       description: description,
       trash: false
     }, (err, data) => {
@@ -80,6 +81,7 @@ module.exports = {
           $project: {
             name: 1,
             activityDuration: 1,
+            manualTime:1,
             trash: 1,
             status: 1,
             actuator: { $ifNull: [{ "$arrayElemAt": ["$actuator", 0] }, null] },
@@ -105,7 +107,8 @@ module.exports = {
     var actuatorId = req.body.actuatorId;
     var status = req.body.status;
     var activityDuration = req.body.activityDuration;
-    var description = req.body.note;
+    var manualTime = req.body.manualTime;
+    var description = req.body.description;
     var trash = req.body.trash;
     models.function.update({ _id: _id }, {
       $set: {
@@ -113,6 +116,7 @@ module.exports = {
         actuatorId: actuatorId,
         status: status,
         activityDuration: activityDuration,
+        manualTime: manualTime,
         description: description,
         trash: false
       }
