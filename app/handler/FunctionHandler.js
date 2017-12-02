@@ -1,5 +1,5 @@
-
-var models = require('../models/models');
+var models = require('../models/models'),
+    ActuatorHandler = require('./ActuatorHandler');
 
 module.exports = {
 
@@ -28,5 +28,37 @@ module.exports = {
 
     getFunctionMaxDuration: async (actuatorId) => {
         return models.function.find({actuatorId: actuatorId, status: true}).sort('-time').limit(1).exec();
+    },
+
+    getFunctionMaxManualTime: async (actuatorId) => {
+        return models.function.find({actuatorId: actuatorId, status: true}).sort('-manualTime').limit(1).exec();
+    },
+
+    updateStatusAndTimeByActuatorId: (actuatorId, status, time) => {
+        
+        return models.function.update({
+            actuatorId: actuatorId
+        }, {
+            $set: {
+                status: status,
+                manualTime: time
+            }
+        }, {
+            multi: true
+        });
+    },
+
+    manualUpdateStatusById: async (id, status, time) => {
+        let updateFunc = await models.function.update({
+            _id: id
+        }, {
+            $set: {
+                status: status,
+                manualTime: time
+            }
+        });
+        let thisFunc = await models.function.findById(id);
+        // let a = await ActuatorHandler.findAndManualUpdateActuatorById(thisFunc.actuatorId, 1);
+        return thisFunc;
     }
 }

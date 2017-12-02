@@ -1,7 +1,9 @@
 "use strict";
 
 var models = require('../models/models'),
-  mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    FunctionHandler = require('../handler/FunctionHandler'),
+    ActuatorHandler = require('../handler/ActuatorHandler')
 
 module.exports = {
   addFunction: (req, res) => {
@@ -173,4 +175,27 @@ module.exports = {
     });
   },
 
+  manualUpdateFunctionStatusById: async (req, res) => {
+    let functionId = req.body.functionId;
+    let time = parseInt(req.body.time);
+    let status = (req.body.status == 'true');
+    let thisFunc = await FunctionHandler.manualUpdateStatusById(functionId, status, time);
+    let actuator;
+    let functions = await FunctionHandler.getFunctionByActuatorId(thisFunc.actuatorId);
+    if (status == true) {
+      actuator = await ActuatorHandler.findAndManualUpdateActuatorById(thisFunc.actuatorId, status);
+    } else {
+      actuator = await ActuatorHandler.findAndManualUpdateTimeActuatorById(thisFunc.actuatorId);
+    }
+    res.json({
+      status: 1, 
+      result: {
+        name: actuator.name,
+        id: actuator._id,
+        status: actuator.status,
+        time: actuator.time,
+        functions: functions
+      }
+    });
+  }
 }

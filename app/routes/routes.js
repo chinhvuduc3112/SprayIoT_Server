@@ -69,6 +69,7 @@ module.exports = (router) => {
   router.put('/updateInfoActuator', actuator.updateInfoActuator);
   router.delete('/deleteActuator/:id', actuator.deleteActuator);
   router.get('/getActuatorByIdArea/:idArea', actuator.getActuatorByIdArea);
+  router.put('/manualUpdateStatusActuator', actuator.manualUpdateStatusActuator);
 
   router.get('/getFunctions', functionn.getFunctions);
   router.get('/getFunction/:id', functionn.getFunction);
@@ -77,6 +78,7 @@ module.exports = (router) => {
   router.put('/updateFunction', functionn.updateFunction);
   router.put('/updateNameFunction', functionn.updateNameFunction);// Không hiểu sao sai
   router.delete('/deleteFunction/:id', functionn.deleteFunction);
+  router.put('/manualUpdateFunctionStatusById', functionn.manualUpdateFunctionStatusById);
 
   router.get('/getGroupExcutionConditions', groupExcutionCondition.getGroupExcutionConditions);
   router.get('/getGroupExcutionCondition/:id', groupExcutionCondition.getGroupExcutionCondition);

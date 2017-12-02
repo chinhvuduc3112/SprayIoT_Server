@@ -116,8 +116,14 @@ module.exports = {
       type: Boolean,
       default: false
     },
-    activityDuration: Number,
-    manualTime: Number,
+    activityDuration: {
+      default: 0,
+      type: Number
+    },
+    manualTime: {
+      default: 0,
+      type: Number
+    },
     description: String,
     trash: Boolean
   })),
@@ -149,9 +155,9 @@ module.exports = {
   historyAction: mongoose.model('HistoryAction', mongoose.Schema({
     name: String,
     functionId: mongoose.Schema.Types.ObjectId,
-    actuatorId:mongoose.Schema.Types.ObjectId,
+    actuatorId: mongoose.Schema.Types.ObjectId,
     userId: mongoose.Schema.Types.ObjectId,
-    time:Number,
+    time: Number,
     time: {
       type: Date,
       default: new Date(),

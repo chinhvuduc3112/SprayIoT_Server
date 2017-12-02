@@ -1,7 +1,8 @@
 "use strict";
 
 var models = require('../models/models'),
-  mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    ActuatorHandler = require('../handler/ActuatorHandler')
 
 var mqtt = require('mqtt')
 var client = mqtt.connect('mqtt://192.168.1.4')
@@ -190,5 +191,22 @@ module.exports = {
         });
       }
     });
-  }
+  },
+
+  manualUpdateStatusActuator: (req, res) => {
+    let actuatorId = req.body.actuatorId;
+    let status = (req.body.status == 'true');
+    let time = parseInt(req.body.time);
+    ActuatorHandler.manualUpdateStatusActuator(actuatorId, status, time).then(data => {
+      res.json({
+        status: 1,
+        result: data
+      });
+    }).catch(err => {
+      res.json({
+        status: 0,
+        err: err
+      });
+    })
+  },
 }
