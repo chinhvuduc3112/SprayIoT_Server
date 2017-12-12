@@ -35,28 +35,21 @@ mqttServ.on('published', function(packet, client) {
   
   if (packet.topic == '/addDataSensor') {
     let data = JSON.parse(packet.payload.toString());
-    let deviceNodeName = data.deviceNodeName;
-    let time = new Date(parseInt(data.time));
-    let dataSen = data.data;
+    
+    DeviceNodeHandler.updateDeviceNode(data.Address).then(data => {
+    if (data != null) {
+      let payload = Buffer.from(JSON.stringify({
+        result: data
+      }), 'utf8');
+      let myPacket = packet;
+      myPacket.payload = payload;
+      myPacket.topic = '/function';
 
-    DeviceNodeHandler.updateDeviceNode(deviceNodeName, data).then(data => {
-
-      let len = data.length;
-      for (let i = 0; i < len; i++) {
-        let publishData = {
-          name: data[i].name,
-          id: data[i]._id,
-          status: data[i].status,
-          time: data[i].time,
-          functions: data[i].functions
-        }
-        let payload = Buffer.from(JSON.stringify(publishData), 'utf8');
-        let myPacket = packet;
-        myPacket.payload = payload;
-        myPacket.topic = '/function';
-        
-        mqttServ.publish(myPacket, client);
-      }
+      mqttServ.publish(myPacket, client);
+      
+     } else {
+       console.log('null');
+     }
      
     }).catch(e => {
       console.log(e);

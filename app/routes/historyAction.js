@@ -1,18 +1,24 @@
 "use strict";
 
 var models = require('../models/models'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    moment = require('moment-timezone'),
+    fmt   = "MM/DD/YYYY h:mm:ss A";
 
 module.exports = {
   addHistoryAction: (req, res) => {
     var name = req.body.name;
     var userId = req.body.userId;
     var functionId = req.body.functionId;
+    var june = moment();
+    june.tz('Asia/Bangkok')
+    june.format(fmt);
     models.historyAction.create({
       name: name,
       userId: userId,
       functionId: functionId,
-      trash: false
+      trash: false,
+      time: june
     }, (err, data) => {
       if (!err) {
         res.json({status: 1});

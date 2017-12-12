@@ -34,6 +34,18 @@ module.exports = {
         return models.function.find({actuatorId: actuatorId, status: true}).sort('-manualTime').limit(1).exec();
     },
 
+    
+
+    updateDurationById: (id, duration) => {
+        return models.function.update({
+            _id: id
+        }, {
+            $set: {
+                activityDuration: duration
+            }
+        });
+    },
+
     updateStatusAndTimeByActuatorId: (actuatorId, status, time) => {
         
         return models.function.update({

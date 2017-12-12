@@ -1,9 +1,9 @@
 "use strict";
 
 var models = require('../models/models'),
-    mongoose = require('mongoose'),
-    FunctionHandler = require('../handler/FunctionHandler'),
-    ActuatorHandler = require('../handler/ActuatorHandler')
+  mongoose = require('mongoose'),
+  FunctionHandler = require('../handler/FunctionHandler'),
+  ActuatorHandler = require('../handler/ActuatorHandler')
 
 module.exports = {
   addFunction: (req, res) => {
@@ -29,7 +29,7 @@ module.exports = {
     });
   },
 
-    getFunctions: (req, res) => {
+  getFunctions: (req, res) => {
     models.function.find({}, (err, data) => {
       if (!err) {
         res.json({
@@ -82,8 +82,9 @@ module.exports = {
         {
           $project: {
             name: 1,
+            description: 1,
             activityDuration: 1,
-            manualTime:1,
+            manualTime: 1,
             trash: 1,
             status: 1,
             actuator: { $ifNull: [{ "$arrayElemAt": ["$actuator", 0] }, null] },
@@ -136,27 +137,31 @@ module.exports = {
     });
   },
 
-  updateNameFunction: (req, res) => {
+  updateInfoFunction: (req, res) => {
     var _id = req.body._id;
     var name = req.body.name;
+    var actuatorId = req.body.actuatorId;
+    var description = req.body.description;
     models.function.update({
       _id: _id
     }, {
-      $set: {
-        name: name
-      }
-    },(err, data)=>{
-      if(!err){
-        res.json({
-          status:1,
-        });
-      }else{
-        res.json({
-          status:0,
-          err:err
-        });
-      }
-    });
+        $set: {
+          name: name,
+          actuatorId: actuatorId,
+          description: description
+        }
+      }, (err, data) => {
+        if (!err) {
+          res.json({
+            status: 1,
+          });
+        } else {
+          res.json({
+            status: 0,
+            err: err
+          });
+        }
+      });
   },
 
   deleteFunction: (req, res) => {
@@ -188,7 +193,7 @@ module.exports = {
       actuator = await ActuatorHandler.findAndManualUpdateTimeActuatorById(thisFunc.actuatorId);
     }
     res.json({
-      status: 1, 
+      status: 1,
       result: {
         name: actuator.name,
         id: actuator._id,

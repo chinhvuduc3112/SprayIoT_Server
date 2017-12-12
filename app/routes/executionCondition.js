@@ -88,6 +88,38 @@ module.exports = {
             });
     },
 
+    updateInfoExecutionCondition: (req, res) => {
+        var name = req.body.name;
+        var description = req.body.description;
+        var compare = req.body.compare;
+        var compareValue = req.body.compareValue;
+        var deviceNodeId = req.body.deviceNodeId;
+        var _id = req.body._id;
+        models.executionCondition.update({
+            _id: _id
+        }, {
+                $set: {
+                    name: name,
+                    description: description,
+                    deviceNodeId: deviceNodeId,
+                    compare: compare,
+                    compareValue: compareValue,
+                    trash: false
+                }
+            }, (err, data) => {
+                if (!err) {
+                    res.json({
+                        status: 1
+                    });
+                } else {
+                    res.json({
+                        status: 0,
+                        err: err
+                    });
+                }
+            });
+    },
+
     getAllExecutionCondition: (req, res) => {
         models.executionCondition.find({}, (err, data) => {
             if (!err) {

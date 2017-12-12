@@ -137,6 +137,7 @@ module.exports = {
           name: 1,
           description: 1,
           note: 1,
+          nodeId: 1,
           data: 1,
           trash: 1,
           deviceType: {"$arrayElemAt": ["$deviceType", 0]}

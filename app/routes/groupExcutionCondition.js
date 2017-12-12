@@ -1,21 +1,25 @@
 "use strict";
 
 var models = require('../models/models'),
-    mongoose = require('mongoose');
+  mongoose = require('mongoose');
 
 module.exports = {
   addGroupExcutionCondition: (req, res) => {
     var name = req.body.name;
     var description = req.body.description;
     var functionId = req.body.functionId;
+    var status = req.body.status;
+    var autoTime = req.body.autoTime;
     models.groupExecutionCondition.create({
       name: name,
       description: description,
       functionId: functionId,
+      status: status,
+      autoTime: autoTime,
       trash: false
     }, (err, data) => {
       if (!err) {
-        res.json({status: 1});
+        res.json({ status: 1 });
       } else {
         res.json({
           status: 0,
@@ -67,7 +71,7 @@ module.exports = {
         }
       },
       {
-        $lookup:  {
+        $lookup: {
           from: "functions",
           localField: "functionId",
           foreignField: "_id",
@@ -78,8 +82,10 @@ module.exports = {
         $project: {
           name: 1,
           description: 1,
+          status: 1,
+          autoTime: 1,
           trash: 1,
-          function: {$ifNull: [{ "$arrayElemAt": ["$function", 0] }, null]},
+          function: { $ifNull: [{ "$arrayElemAt": ["$function", 0] }, null] },
         }
       }
     ]).then(data => {
@@ -99,12 +105,16 @@ module.exports = {
     var _id = req.body._id;
     var name = req.body.name;
     var description = req.body.description;
+    var status = req.body.status;
+    var autoTime = req.body.autoTime;
     var functionId = req.body.functionId;
-    models.groupExecutionCondition.update({_id: _id}, {
+    models.groupExecutionCondition.update({ _id: _id }, {
       $set: {
         name: name,
         description: description,
+        status: status,
         functionId: functionId,
+        autoTime: autoTime
       }
     }, (err, data) => {
       if (!err) {
@@ -122,7 +132,7 @@ module.exports = {
 
   deleteGroupExcutionCondition: (req, res) => {
     var _id = req.params.id;
-    models.groupExecutionCondition.remove({_id: _id}, (err, data) => {
+    models.groupExecutionCondition.remove({ _id: _id }, (err, data) => {
       if (!err) {
         res.json({
           status: 1
@@ -135,5 +145,5 @@ module.exports = {
       }
     });
   },
-  
+
 }

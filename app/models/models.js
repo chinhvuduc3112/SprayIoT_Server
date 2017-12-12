@@ -132,6 +132,14 @@ module.exports = {
     name: String,
     description: String,
     functionId: mongoose.Schema.Types.ObjectId,
+    autoTime: {
+      default: 0,
+      type: Number
+    },
+    status: {
+      type: Boolean,
+      default: false
+    },
     trash: Boolean
   })),
 
@@ -142,10 +150,6 @@ module.exports = {
     deviceNodeId: mongoose.Schema.Types.ObjectId,
     compare: Number, //0: bang; 1:nho hon; 2:lon hon
     compareValue: Number,
-    status: {
-      type: Boolean,
-      default: false
-    },
     trash: {
       type: Boolean,
       default: false
@@ -158,10 +162,7 @@ module.exports = {
     actuatorId: mongoose.Schema.Types.ObjectId,
     userId: mongoose.Schema.Types.ObjectId,
     time: Number,
-    time: {
-      type: Date,
-      default: new Date(),
-    },
+    time: Date,
     trash: Boolean
   }))
 }

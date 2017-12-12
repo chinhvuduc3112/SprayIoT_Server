@@ -76,7 +76,7 @@ module.exports = (router) => {
   router.get('/getFunctionByActuatorId/:actuatorId', functionn.getFunctionByActuatorId);
   router.post('/addFunction', functionn.addFunction);
   router.put('/updateFunction', functionn.updateFunction);
-  router.put('/updateNameFunction', functionn.updateNameFunction);// Không hiểu sao sai
+  router.put('/updateInfoFunction', functionn.updateInfoFunction);
   router.delete('/deleteFunction/:id', functionn.deleteFunction);
   router.put('/manualUpdateFunctionStatusById', functionn.manualUpdateFunctionStatusById);
 
@@ -92,6 +92,7 @@ module.exports = (router) => {
   router.get('/getExecutionConditionByGroup/:groupId', excutionCondition.getExecutionConditionByGroup);
   router.post('/addExecutionCondition', excutionCondition.addExecutionCondition);
   router.put('/updateExecutionCondition', excutionCondition.updateExecutionCondition);
+  router.put("/updateInfoExecutionCondition", excutionCondition.updateInfoExecutionCondition);
   router.delete('/deleteExcutionCondition', excutionCondition.deleteExcutionCondition);
 
   router.get('/getHistoryActions', historyAction.getHistoryActions);
