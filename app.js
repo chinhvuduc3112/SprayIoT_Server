@@ -37,20 +37,19 @@ mqttServ.on('published', function(packet, client) {
     let data = JSON.parse(packet.payload.toString());
     
     DeviceNodeHandler.updateDeviceNode(data.Address).then(data => {
-    if (data != null) {
-      let payload = Buffer.from(JSON.stringify({
-        result: data
-      }), 'utf8');
-      let myPacket = packet;
-      myPacket.payload = payload;
-      myPacket.topic = '/function';
+      if (data != null) {
+        let payload = Buffer.from(JSON.stringify({
+          result: data
+        }), 'utf8');
+        let myPacket = packet;
+        myPacket.payload = payload;
+        myPacket.topic = '/function';
 
-      mqttServ.publish(myPacket, client);
-      
-     } else {
-       console.log('null');
-     }
-     
+        mqttServ.publish(myPacket, client);
+        
+      } else {
+        console.log('null');
+      }
     }).catch(e => {
       console.log(e);
     });
@@ -63,6 +62,8 @@ mqttServ.on('ready', () => {
 
 
 mqttServ.attachHttpServer(server);
+
+global.mqttServ = mqttServ;
 
 server.listen(PORT, () => {
   console.log('app listen on port ' + PORT);

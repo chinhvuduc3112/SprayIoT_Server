@@ -159,10 +159,15 @@ module.exports = {
   historyAction: mongoose.model('HistoryAction', mongoose.Schema({
     name: String,
     functionId: mongoose.Schema.Types.ObjectId,
-    actuatorId: mongoose.Schema.Types.ObjectId,
     userId: mongoose.Schema.Types.ObjectId,
-    time: Number,
-    time: Date,
+    timeStart: {
+      type: Date,
+      default: new Date()
+    },
+    timer: {
+      default: 0,
+      type: Number
+    },
     trash: Boolean
   }))
 }

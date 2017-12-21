@@ -202,5 +202,18 @@ module.exports = {
         functions: functions
       }
     });
+    global.mqttServ.publish({
+      cmd: 'publish',
+      qos: 2,
+      topic: '/maunalFunction',
+      payload: new Buffer(JSON.stringify({
+        name: actuator.name,
+        id: actuator._id,
+        status: actuator.status,
+        time: actuator.time,
+        functions: functions
+      })),
+      retain: false
+    });
   }
 }

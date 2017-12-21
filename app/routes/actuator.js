@@ -4,11 +4,6 @@ var models = require('../models/models'),
     mongoose = require('mongoose'),
     ActuatorHandler = require('../handler/ActuatorHandler')
 
-var mqtt = require('mqtt')
-var client = mqtt.connect('mqtt://192.168.1.4')
-client.on('connect', function () {
-  console.log('abc')
-})
 
 module.exports = {
   getActuators: (req, res) => {
@@ -201,6 +196,13 @@ module.exports = {
       res.json({
         status: 1,
         result: data
+      });
+      global.mqttServ.publish({
+        cmd: 'publish',
+        qos: 2,
+        topic: '/maunalActuator',
+        payload: new Buffer(JSON.stringify(data)),
+        retain: false
       });
     }).catch(err => {
       res.json({

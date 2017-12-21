@@ -21,7 +21,7 @@ module.exports = {
 
     findAndManualUpdateActuatorById: async (actuatorId, status) => {
         let functionMaxManualTime = await FunctionHandler.getFunctionMaxManualTime(actuatorId);
-        let manualTime = functionMaxManualTime[0] != null && functionMaxManualTime != void(0) ? functionMaxManualTime[0].manualTime : 0; 
+        let manualTime = functionMaxManualTime[0] != null && functionMaxManualTime != void(0) ? functionMaxManualTime[0].activityDuration : 0; 
         await models.actuator.update({
             _id: actuatorId
         }, {
@@ -37,7 +37,7 @@ module.exports = {
 
     findAndManualUpdateTimeActuatorById: async (actuatorId) => {
         let functionMaxManualTime = await FunctionHandler.getFunctionMaxManualTime(actuatorId);
-        let manualTime = functionMaxManualTime[0] != null && functionMaxManualTime != void(0) ? functionMaxManualTime[0].manualTime : 0; 
+        let manualTime = functionMaxManualTime[0] != null && functionMaxManualTime != void(0) ? functionMaxManualTime[0].activityDuration : 0; 
         await models.actuator.update({
             _id: actuatorId
         }, {
