@@ -200,7 +200,7 @@ module.exports = {
       global.mqttServ.publish({
         cmd: 'publish',
         qos: 2,
-        topic: '/maunalActuator',
+        topic: '/Subcribe/manualActuator',
         payload: new Buffer(JSON.stringify(data)),
         retain: false
       });

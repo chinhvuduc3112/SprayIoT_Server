@@ -43,7 +43,7 @@ mqttServ.on('published', function(packet, client) {
         }), 'utf8');
         let myPacket = packet;
         myPacket.payload = payload;
-        myPacket.topic = '/function';
+        myPacket.topic = '/Subcribe/function';
 
         mqttServ.publish(myPacket, client);
         
