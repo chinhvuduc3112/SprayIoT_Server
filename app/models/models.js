@@ -6,17 +6,13 @@ module.exports = {
     username: String,
     password: String,
     idGroupUser: mongoose.Schema.Types.ObjectId,
-    idInfoUser: mongoose.Schema.Types.ObjectId,
-    trash: Boolean,
-    userInfo: {
-      name: String,
-      phone: String,
-      address: String,
-      email: String,
-      description: String,
-      image: String,
-      trash: Boolean
-    }
+    name: String,
+    phone: String,
+    address: String,
+    email: String,
+    note: String,
+    image: String,
+    trash: Boolean
   })),
 
   groupUser: mongoose.model('GroupUser', mongoose.Schema({
