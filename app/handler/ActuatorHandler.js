@@ -73,4 +73,29 @@ module.exports = {
             functions: functions
         }
     },
+
+    updateTimeActuators: async (actuators) => {
+        for (let i = 0; i < actuators.length; i++) {
+            let actuator = actuators[i];
+            await models.actuator.update({
+                _id: actuator._id
+            }, {
+                $set: {
+                    time: actuator.time,
+                    status: actuator.status
+                }
+            });
+            let functions = actuator.functions;
+            for (let j = 0; j < functions.length; j++) {
+                let func = functions[j];
+                await models.function.update({
+                    _id: func._id
+                }, {
+                    activityDuration: func.activityDuration,
+                    status: func.status
+                });
+            }
+        }
+        return 1;
+    } 
 }

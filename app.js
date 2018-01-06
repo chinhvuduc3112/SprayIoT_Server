@@ -9,7 +9,8 @@ var express = require('express'),
     mosca    = require('mosca'),
     mqttServ = new mosca.Server({}),
     server = require('http').Server(app),
-    DeviceNodeHandler = require('./app/handler/DeviceNodeHandler');
+    DeviceNodeHandler = require('./app/handler/DeviceNodeHandler'),
+    ActuatorHandler = require('./app/handler/ActuatorHandler');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/SprayIoT', {
@@ -32,8 +33,8 @@ mqttServ.on('clientConnected', function(client) {
 // fired when a message is received
 mqttServ.on('published', function(packet, client) {
   // console.log(packet);
-  
-  if (packet.topic == '/addDataSensor') {
+  let topic = packet.topic;
+  if (topic == '/addDataSensor') {
     let data = JSON.parse(packet.payload.toString());
     
     DeviceNodeHandler.updateDeviceNode(data.Address).then(data => {
@@ -53,6 +54,15 @@ mqttServ.on('published', function(packet, client) {
     }).catch(e => {
       console.log(e);
     });
+  } else if (topic == '/Publish/MBVDT') {
+    let data = JSON.parse(packet.payload.toString());
+    let actuators = data["May Bom"];
+    
+    ActuatorHandler.updateTimeActuators(actuators).then(data => {
+      console.log('ok');
+    }).catch(e => {
+      console.log(e);
+    })
   }
 });
 
