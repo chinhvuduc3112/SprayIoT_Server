@@ -63,6 +63,7 @@ module.exports = (router) => {
   router.delete('/deleteDeviceNode/:id', deviceNode.deleteDeviceNode);
 
   router.get('/getActuators', actuator.getActuators);
+  router.get('/getActuatorById/:id', actuator.getActuatorById);
   router.get('/getInfoActuators', actuator.getInfoActuators);
   router.post('/addActuator', actuator.addActuator);
   router.put('/updateDataActuator', actuator.updateDataActuator);
@@ -93,7 +94,7 @@ module.exports = (router) => {
   router.post('/addExecutionCondition', excutionCondition.addExecutionCondition);
   router.put('/updateExecutionCondition', excutionCondition.updateExecutionCondition);
   router.put("/updateInfoExecutionCondition", excutionCondition.updateInfoExecutionCondition);
-  router.delete('/deleteExcutionCondition', excutionCondition.deleteExcutionCondition);
+  router.delete('/deleteExcutionCondition/:id', excutionCondition.deleteExcutionCondition);
 
   router.get('/getHistoryActions', historyAction.getHistoryActions);
   router.get('/getHistoryAction/:id', historyAction.getHistoryAction);

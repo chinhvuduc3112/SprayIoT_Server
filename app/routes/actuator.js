@@ -22,6 +22,23 @@ module.exports = {
     });
   },
 
+  getActuatorById: (req, res) => {
+    let _id = req.params.id;
+    models.actuator.findById(_id, (err, data) => {
+      if (!err) {
+        res.json({
+          result: data,
+          status: 1
+        });
+      } else {
+        res.json({
+          status: 0,
+          err: err
+        });
+      }
+    });
+  },
+
   addActuator: (req, res) => {
     var name = req.body.name;
     var description = req.body.description;
