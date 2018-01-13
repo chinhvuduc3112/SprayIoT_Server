@@ -101,4 +101,5 @@ module.exports = (router) => {
   router.post('/addHistoryAction', historyAction.addHistoryAction);
   router.put('/updateHistoryAction', historyAction.updateHistoryAction);
   router.delete('/deleteHistoryAction/:id', historyAction.deleteHistoryAction);
+  router.get('/getByActuatorId', historyAction.getByActuatorId);
 }

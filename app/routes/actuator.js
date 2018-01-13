@@ -212,7 +212,7 @@ module.exports = {
     ActuatorHandler.manualUpdateStatusActuator(actuatorId, status, time).then(data => {
       res.json({
         status: 1,
-        result: data
+        result: data.result
       });
       global.mqttServ.publish({
         cmd: 'publish',

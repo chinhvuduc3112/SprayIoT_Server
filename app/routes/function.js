@@ -196,7 +196,7 @@ module.exports = {
       status: 1,
       result: {
         name: actuator.name,
-        id: actuator._id,
+        _id: actuator._id,
         status: actuator.status,
         time: actuator.time,
         functions: functions
@@ -209,7 +209,7 @@ module.exports = {
       payload: new Buffer(JSON.stringify({
         result: {
           name: actuator.name,
-          id: actuator._id,
+          _id: actuator._id,
           status: actuator.status,
           time: actuator.time,
           functions: functions

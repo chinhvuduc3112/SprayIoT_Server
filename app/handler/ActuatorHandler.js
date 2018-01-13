@@ -66,11 +66,13 @@ module.exports = {
         let actuator = await models.actuator.findById(actuatorId);
         let functions = await FunctionHandler.getFunctionByActuatorId(actuatorId);
         return {
-            name: actuator.name,
-            id: actuator._id,
-            status: actuator.status,
-            time: actuator.time,
-            functions: functions
+            result: {
+                name: actuator.name,
+                _id: actuator._id,
+                status: actuator.status,
+                time: actuator.time,
+                functions: functions
+            }
         }
     },
 

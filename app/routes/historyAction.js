@@ -3,7 +3,8 @@
 var models = require('../models/models'),
     mongoose = require('mongoose'),
     moment = require('moment-timezone'),
-    fmt   = "MM/DD/YYYY h:mm:ss A";
+    fmt   = "MM/DD/YYYY h:mm:ss A",
+    HistoryAction = require('../handler/HistoryActionHandler')
 
 module.exports = {
   addHistoryAction: (req, res) => {
@@ -106,5 +107,21 @@ module.exports = {
       }
     });
   },
+
+  getByActuatorId: (req, res) => {
+    let actuatorId = req.query.actuatorId;
+    let date = req.query.date;
+    HistoryAction.getByActuatorId(actuatorId, date).then(data => {
+      res.json({
+        status: 1,
+        result: data
+      });
+    }).catch(e => {
+      res.json({
+        status: 0,
+        err: e
+      });
+    })
+  }
   
 }
