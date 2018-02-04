@@ -14,7 +14,8 @@ var models = require('../models/models'),
     functionn = require('./function'),
     groupExcutionCondition = require('./groupExcutionCondition'),
     excutionCondition = require('./executionCondition'),
-    historyAction = require('./historyAction');
+    historyAction = require('./historyAction'),
+    autoable = require('./autoable');
 
 module.exports = (router) => {
   router.post('/login', user.login);
@@ -102,4 +103,6 @@ module.exports = (router) => {
   router.put('/updateHistoryAction', historyAction.updateHistoryAction);
   router.delete('/deleteHistoryAction/:id', historyAction.deleteHistoryAction);
   router.get('/getByActuatorId', historyAction.getByActuatorId);
+
+  router.post('/setAutoable', autoable.setAutoable);
 }

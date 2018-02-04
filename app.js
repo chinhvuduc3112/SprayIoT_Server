@@ -49,7 +49,7 @@ mqttServ.on('published', function(packet, client) {
         mqttServ.publish(myPacket, client);
         
       } else {
-        console.log('null');
+        // console.log('null');
       }
     }).catch(e => {
       console.log(e);

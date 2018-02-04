@@ -165,5 +165,12 @@ module.exports = {
       type: Number
     },
     trash: Boolean
+  })),
+
+  autoable: mongoose.model('Autoable', mongoose.Schema({
+    able: {
+      type: Boolean,
+      default: true
+    }
   }))
 }
