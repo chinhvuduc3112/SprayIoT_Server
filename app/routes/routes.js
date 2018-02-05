@@ -105,4 +105,5 @@ module.exports = (router) => {
   router.get('/getByActuatorId', historyAction.getByActuatorId);
 
   router.post('/setAutoable', autoable.setAutoable);
+  router.get('/getAutoable', autoable.getAutoable);
 }

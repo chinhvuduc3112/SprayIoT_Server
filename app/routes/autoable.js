@@ -15,6 +15,20 @@ module.exports = {
                 err: err
             });
         });
+    },
+
+    getAutoable: async (req, res) => {
+        AutoableHandler.getAutoable().then(data => {
+            res.json({
+                status: 1,
+                autoable: data.able
+            });
+        }).catch(e => {
+            res.json({
+                status: 0,
+                err: err
+            });
+        })
     }
 
 }
