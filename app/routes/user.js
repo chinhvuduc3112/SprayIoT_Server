@@ -1,30 +1,47 @@
 "use strict";
 
 var models = require('../models/models'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    bcrypt = require('bcrypt');
+
+const saltRounds = 10;
 
 module.exports = {
-  login: (req, res) => {
+  login: async (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
-    models.user.findOne({username, password}, (err, user) => {
-      if (user !== null) {
-        res.json({auth: "ok"});
+    let user = await models.user.findOne({username: username})
+    if (user !== null && user !== void(0)) {
+      let compare = bcrypt.compareSync(password, user.password);
+      if (compare == true) {
+        res.json({
+          status: 1,
+          result: {
+            username: username
+          }
+        });
       } else {
-        res.json({auth: "failed"});
+        res.json({
+          status: 0
+        });
       }
-    });
+    } else {
+      res.json({
+        status: 0
+      });
+    }
   },
 
-  addUser: (req, res) => {
+  addUser: async (req, res) => {
     var username = req.body.username;
-    var password = req.body.password;
+    var bodyPassword = req.body.password;
+    var password = bcrypt.hashSync(bodyPassword, saltRounds);
     var idGroupUser = req.body.idGroupUser;
     var idInfoUser = req.body.idInfoUser;
     var trash = req.body.trash;
     var newUser = {
       username: req.body.username,
-      password: req.body.password,
+      password: password,
       idGroupUser: req.body.idGroupUser,
       idInfoUser: req.body.idInfoUser,
       trash: req.body.trash,

@@ -9,6 +9,7 @@
   "author": "Chinh",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "moment-timezone": "^0.5.14",
