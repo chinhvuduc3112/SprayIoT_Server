@@ -20,6 +20,7 @@ var models = require('../models/models'),
 module.exports = (router) => {
   router.post('/login', user.login);
   router.post('/addUser', user.addUser);
+  router.get('/getUsers', user.getUsers);
 
   router.post('/addArea', area.addArea);
   router.get('/getAreas', area.getAreas);

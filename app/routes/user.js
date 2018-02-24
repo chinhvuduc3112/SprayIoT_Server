@@ -1,8 +1,8 @@
 "use strict";
 
 var models = require('../models/models'),
-    mongoose = require('mongoose'),
-    bcrypt = require('bcrypt');
+  mongoose = require('mongoose'),
+  bcrypt = require('bcrypt');
 
 const saltRounds = 10;
 
@@ -10,8 +10,8 @@ module.exports = {
   login: async (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
-    let user = await models.user.findOne({username: username})
-    if (user !== null && user !== void(0)) {
+    let user = await models.user.findOne({ username: username })
+    if (user !== null && user !== void (0)) {
       let compare = bcrypt.compareSync(password, user.password);
       if (compare == true) {
         res.json({
@@ -48,7 +48,7 @@ module.exports = {
     };
     models.user.create(newUser, (err, data) => {
       if (!err) {
-        res.json({status: 1});
+        res.json({ status: 1 });
       } else {
         res.json({
           status: 0,
@@ -56,5 +56,21 @@ module.exports = {
         });
       }
     })
+  },
+
+  getUsers: (req, res) => {
+    models.user.find({}, (err, data) => {
+      if (!err) {
+        res.json({
+          result: data,
+          status: 1
+        });
+      } else {
+        res.json({
+          status: 0,
+          err: err
+        });
+      }
+    });
   }
 }
