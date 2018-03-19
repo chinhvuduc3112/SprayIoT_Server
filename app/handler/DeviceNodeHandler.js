@@ -12,6 +12,7 @@ module.exports = {
         let len = datas.length;
         let returnObj = {};
         let funcObj = {};
+        let isRet = false;
         for (let t = 0; t < len; t++) {
             let data = datas[t];
             let deviceNodeName = data.deviceNodeName;
@@ -27,12 +28,31 @@ module.exports = {
                 await DataSensorHandler.addDataSensor(data);
                 if (able) {
                     let compare = await ExecConditonHandler.updateExecutionConditionCompare(deviceNode._id, parseFloat(data.data));
+                    
+                }
+            } else {
+                throw new Error('Error occur');
+            }
+        }
+
+
+        for (let t = 0; t < len; t++) {
+            let data = datas[t];
+            let deviceNodeName = data.deviceNodeName;
+            let deviceNode = await models.deviceNode.findOne(
+                {name: deviceNodeName});
+            
+            if (deviceNode != null) {
+                data.deviceNodeId = deviceNode._id;
+                if (able) {
+                    let compare = await ExecConditonHandler.updateExecutionConditionCompare(deviceNode._id, parseFloat(data.data));
                     if (compare === true) {
                         let groupCondis = await ExecConditonHandler.getGroupConditionByDeviceNodeId(deviceNode._id);
                         for (let i = 0; i < groupCondis.length; i++) {
                             let groupCondi = groupCondis[i];
                             let groupCondiId = groupCondi._id;
                             let statusGroup = await ExecConditonHandler.getStatusGroupCondition(groupCondiId);
+                            console.log(statusGroup)
                             if (statusGroup) {
                                 let execFunction = await FunctionHandler.getFunctionById(groupCondi.functionId);
                                 if (funcObj[execFunction._id] == null ||  funcObj[execFunction._id] == undefined) {
@@ -48,6 +68,10 @@ module.exports = {
                 throw new Error('Error occur');
             }
         }
+
+
+
+        
         let objs = {};
         let returnArr = [];
         let funcObjKeys = Object.keys(funcObj);
@@ -70,6 +94,7 @@ module.exports = {
                 }
                 let execFunction = await FunctionHandler.findAndUpdateById(funcObjKeys[i], statusGroup);
                 if (statusGroup) {
+                    isRet = true;
                     await FunctionHandler.updateDurationById(funcObjKeys[i], maxAutoTime);
                 }
                 let actuator = await ActuatorHandler.findAndUpdateActuatorById(execFunction.actuatorId, statusGroup);
@@ -97,6 +122,6 @@ module.exports = {
         for (let i = 0; i < objKeys.length; i++) {
             retArr.push(returnObj[objKeys[i]]);
         }
-        return able ? retArr : null;
+        return able && isRet ? retArr : null;
     }
 }

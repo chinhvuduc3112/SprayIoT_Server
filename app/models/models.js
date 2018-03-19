@@ -146,6 +146,10 @@ module.exports = {
     deviceNodeId: mongoose.Schema.Types.ObjectId,
     compare: Number, //0: bang; 1:nho hon; 2:lon hon
     compareValue: Number,
+    status: {
+      type: Boolean,
+      default: false
+    },
     trash: {
       type: Boolean,
       default: false

@@ -10,7 +10,9 @@ module.exports = {
         let check = false;
         for (let i = 0; i < execCondi.length; i++) {
             let compare = await compareToCondi(data, execCondi[i]);
-            check = true;
+            if (compare) {
+                check = true;
+            }
         }
         return check;
     },
